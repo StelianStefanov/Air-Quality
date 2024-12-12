@@ -1,5 +1,6 @@
 import logging
 import time
+import netifaces
 
 from enviroplus import gas
 
@@ -34,17 +35,30 @@ def get_data():
     return temperature, pressure, humidity
 
 
-def get_temperature():
-    temperature = bme280.get_temperature()
-
-    return temperature
-
-
 display = st7735.ST7735(port=0, cs=1, dc="GPIO9", backlight="GPIO12", rotation=270, spi_speed_hz=10000000)
+
+
+inter_names = ["eth0", "wlan0"]
+
+
+def get_ip():
+    result = None
+
+    for name in inter_names:
+        try:
+            address = netifaces.ifaddresses(name)
+            interfaces = address[netifaces.AF_INET]
+            if interfaces:
+                result = interfaces[0]["addr"]
+        except Exception:
+            ...
+
+    return result
 
 
 def display_data():
 
+    # Start display
     display.begin()
 
     WIDTH = display.width
@@ -60,11 +74,20 @@ def display_data():
     text_colour = (255, 255, 255)
     back_colour = (0, 0, 0)
 
+    # Main Loop
     while True:
 
         temperature, pressure, humidity = get_data()
 
-        # Display temperature and refresh every second for 3 seconds.
+        # IP
+        ip = get_ip()
+        if ip:
+            draw.rectangle((0, 0, WIDTH, HEIGHT), back_colour)
+            font_ip = ImageFont.truetype(UserFont, 18)
+            draw.text((15, 25), ip, font=font_ip, fill=text_colour)
+            display.display(img)
+            time.sleep(5)
+
         # NH3(Amonia)
         readings = gas.read_all()
         readings_text = f"{readings.nh3 / 1000:05.2f} kO"
@@ -105,6 +128,7 @@ def display_data():
         logging.info(f"Temperature: {temperature_text}")
         time.sleep(2.5)
 
+        # Pressure
         pressure_text = f"{pressure:05.2f} hPa"
         draw.rectangle((0, 0, WIDTH, HEIGHT), back_colour)
         if pressure < 1000:
@@ -118,6 +142,7 @@ def display_data():
         logging.info(f"Pressure: {pressure_text}")
         time.sleep(2.5)
 
+        # Humidity
         humidity_text = f"{humidity:05.2f} %"
         draw.rectangle((0, 0, WIDTH, HEIGHT), back_colour)
         if humidity < 30:
@@ -132,6 +157,7 @@ def display_data():
         time.sleep(2.5)
 
 
+# Temporary main runner
 try:
     display_data()
 except KeyboardInterrupt:

@@ -40,7 +40,7 @@ def get_data():
         logging.exception("Error getting data from the BME280(This is the white board with the screen) sensor")
 
 
-display = st7735.ST7735(port=0, cs=1, dc="GPIO9", backlight="GPIO12", rotation=270, spi_speed_hz=10000000)
+display = st7735.ST7735(port=0, cs=1, dc="GPI09", backlight="GPIO12", rotation=270, spi_speed_hz=10000000)
 
 
 inter_names = ["eth0", "wlan0"]

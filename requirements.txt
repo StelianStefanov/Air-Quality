@@ -1,0 +1,6 @@
+pillow==11.0.0	
+enviroplus==1.0.2
+pms5003==1.0.1
+requests
+netifaces
+rich==13.9.4

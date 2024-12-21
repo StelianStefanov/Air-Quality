@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 from bme280 import BME280
 from smbus2 import SMBus
 
-from src.sensors import sensors
+from test_scripts.sensors import sensors
 
 logging.basicConfig(
     format="%(asctime)s.%(msecs)03d %(levelname)-8s %(message)s", level=logging.INFO, datefmt="%Y-%m-%d %H:%M:%S"

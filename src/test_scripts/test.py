@@ -9,7 +9,7 @@ from bme280 import BME280
 from smbus2 import SMBus
 from pms5003 import PMS5003
 
-from sensors import sensors
+from test_scripts.sensors import sensors
 
 from rich.live import Live
 from rich.table import Table
@@ -17,27 +17,15 @@ from rich import box
 from rich.align import Align
 from rich.layout import Layout
 
+from sensor import Sensor
+
 logging.basicConfig(
     format="%(asctime)s.%(msecs)03d %(levelname)-8s %(message)s", level=logging.INFO, datefmt="%Y-%m-%d %H:%M:%S"
 )
 
 
-bus = SMBus(1)
-bme280 = BME280(i2c_dev=bus)
+sensor = Sensor()
 pms5003 = PMS5003(device="/dev/ttyAMA0", baudrate=9600)
-
-
-def get_data():
-    """Fetch temperature, pressure, and humidity from the BME280 sensor."""
-    try:
-        temperature = bme280.get_temperature()
-        pressure = bme280.get_pressure()
-        humidity = bme280.get_humidity()
-
-        temperature -= 10
-        return temperature, pressure, humidity
-    except Exception:
-        logging.exception("Error getting data from the BME280(This is the white board with the screen) sensor")
 
 
 def get_data_sensor():
@@ -80,7 +68,11 @@ def output_table():
         current_date = time.strftime("%d/%m/%Y")
 
         for row in range(1):
-            temperature, pressure, humidity = get_data()
+            sensor_data = sensor.get_data()
+            temperature = sensor_data["temperature"]
+            pressure = sensor_data["pressure"]
+            humidity = sensor_data["humidity"]
+
             data = get_data_sensor()
 
             table.add_row(

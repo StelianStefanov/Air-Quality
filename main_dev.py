@@ -1,5 +1,5 @@
-from src.script import display_data
-from src.script import display
+from test_scripts.script import display_data
+from test_scripts.script import display
 
 
 def main():

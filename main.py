@@ -1,3 +1,5 @@
+"""Startup module"""
+
 from src.display import Display
 
 

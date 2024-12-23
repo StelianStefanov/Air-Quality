@@ -11,9 +11,35 @@ Screen {
     
 }
 
-.some {
-  content-align: right middle;
-  background: blue;
+#temp {
+  content-align: center middle;
   color: white;
-
 }
+
+#press {
+  content-align: center middle;
+  color: white;
+}
+
+#humid {
+  content-align: center middle;
+  color: white;
+}
+
+#first_pms {
+  content-align: center middle;
+  color: white;
+}
+
+HeaderIcon {
+        width: 10
+    }
+
+HeaderClockSpace {
+  width: 10;
+}
+
+HeaderTitle {
+        content-align: center middle;
+        width: 100%;
+    }

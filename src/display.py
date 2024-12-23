@@ -1,13 +1,14 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Static
-from textual.widgets import Label
-from textual.widgets import Digits
+from textual.widgets import Label, Digits, Header
 from src.sensor import Sensor
 import random
+import datetime
+from src.utilities import Utilities
 
 
 class Display(App):
-
+    ENABLE_COMMAND_PALETTE = False
     CSS_PATH = "display.tcss"
 
     def __init__(self):
@@ -15,26 +16,42 @@ class Display(App):
         self.sensor = Sensor()
 
     def compose(self) -> ComposeResult:
+        """Creates the Grid"""
 
-        yield Static(f"", classes="box some", id="f")
+        date = datetime.datetime.now().strftime('%x')
+        yield Header(show_clock=True, name="Hello", icon=date)
+        yield Static("_", classes="box", id="temp")
         # yield Label("Hello, world!", classes="box")
-        yield Static("Two", classes="box", id="s")
+        yield Static("_", classes="box", id="press")
         # yield Static("Three", classes="box")
-        yield Static("454545", classes="box", id="st")
-        yield Static("Temp: 16C", classes="box", id="temp")
-        yield Static("Five", classes="box")
-        yield Static("Six", classes="box")
-        yield Static("Seven", classes="box")
-        yield Static("8888", classes="box")
-        yield Static("9999", classes="box")
+        yield Static("_", classes="box", id="humid")
+        yield Static("_", classes="box", id="first_pms")
+        yield Static("_", classes="box")
+        yield Static("_", classes="box")
+        yield Static("_", classes="box")
+        yield Static("_", classes="box")
+        yield Static("_", classes="box")
+
+    def on_mount(self) -> None:
+        """Header settings"""
+        self.title = "Header Application"
 
     def on_ready(self) -> None:
+        """Calls the update function and sets the interval
+        """
         self.update()
         self.set_interval(1, self.update)
 
-    def update(self):
-        sensor_data = self.sensor.get_data()
+    def update(self) -> None:
+        """Refreshes the data in the interval of 1 second."""
 
-        self.query_one("#f").update(str(sensor_data["temperature"]))
-        self.query_one("#st").update(str(sensor_data["pms"]))
-        # self.query_one("#temp").update(f"Temp: {random.randint(1, 30)}C")
+        sensor_data = self.sensor.get_data()
+        # compensated_temp = Utilities.temperature_compensation(
+        # sensor_data["temperature"])
+        self.title = Utilities.get_ip_address(
+            ["eth0", "wlan0", "enp60s0"])
+        # self.query_one("#temp").update(str(compensated_temp))
+        self.query_one("#temp").update(str(sensor_data["temperature"]))
+        self.query_one("#press").update(str(sensor_data["pressure"]))
+        self.query_one("#humid").update(str(sensor_data["humidity"]))
+        self.query_one("#first_pms").update(str(sensor_data["pms"]))

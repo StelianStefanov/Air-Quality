@@ -1,7 +1,8 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Static
-from textual.widgets import Label, Digits, Header
+from textual.widgets import Header
 from src.sensor import Sensor
+from src.footer import FooterLayout
 import random
 import datetime
 from src.utilities import Utilities
@@ -20,10 +21,9 @@ class Display(App):
 
         date = datetime.datetime.now().strftime('%x')
         yield Header(show_clock=True, name="Hello", icon=date)
+        yield FooterLayout(show_command_palette=False)
         yield Static("_", classes="box", id="temp")
-        # yield Label("Hello, world!", classes="box")
         yield Static("_", classes="box", id="press")
-        # yield Static("Three", classes="box")
         yield Static("_", classes="box", id="humid")
         yield Static("_", classes="box", id="first_pms")
         yield Static("_", classes="box")
@@ -34,7 +34,7 @@ class Display(App):
 
     def on_mount(self) -> None:
         """Header settings"""
-        self.title = "Header Application"
+        self.title = "Air Quality"
 
     def on_ready(self) -> None:
         """Calls the update function and sets the interval
@@ -48,9 +48,10 @@ class Display(App):
         sensor_data = self.sensor.get_data()
         # compensated_temp = Utilities.temperature_compensation(
         # sensor_data["temperature"])
-        self.title = Utilities.get_ip_address(
-            ["eth0", "wlan0", "enp60s0"])
+
         # self.query_one("#temp").update(str(compensated_temp))
+        self.query_one("#footer_right_static").update(
+            str(Utilities.get_ip_address(["eth0", "wlan0", "enp60s0"])))
         self.query_one("#temp").update(str(sensor_data["temperature"]))
         self.query_one("#press").update(str(sensor_data["pressure"]))
         self.query_one("#humid").update(str(sensor_data["humidity"]))

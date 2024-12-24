@@ -7,7 +7,7 @@ class Sensor:
     def __init__(self):
         ...
 
-    def get_data(self):
+    def get_data(self) -> dict[str, int]:
         """Fetches data from BME280 and PMS5003 sensors"""
 
         default_data = {

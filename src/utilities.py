@@ -5,7 +5,7 @@ from subprocess import PIPE, Popen
 class Utilities():
 
     @staticmethod
-    def get_ip_address(net_interfaces):
+    def get_ip_address(net_interfaces) -> str:
         result = ""
 
         for name in net_interfaces:
@@ -27,7 +27,7 @@ class Utilities():
 
         factor = 2.25
 
-        def get_cpu_temperature():
+        def get_cpu_temperature() -> float:
             """Gets the raspberry pi CPU temperature"""
 
             process = Popen(["vcgencmd", "measure_temp"],

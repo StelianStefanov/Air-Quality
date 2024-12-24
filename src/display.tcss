@@ -43,3 +43,10 @@ HeaderTitle {
         content-align: center middle;
         width: 100%;
     }
+
+Footer {
+    layout: horizontal;
+    #footer_right_static {
+      text-align: right;
+      }
+}

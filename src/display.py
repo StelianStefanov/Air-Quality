@@ -19,7 +19,7 @@ class Display(App):
     def compose(self) -> ComposeResult:
         """Creates the Grid"""
 
-        date = datetime.datetime.now().strftime('%x')
+        date = datetime.datetime.now().strftime("%x")
         yield Header(show_clock=True, name="Hello", icon=date)
         yield FooterLayout(show_command_palette=False)
         yield Static("_", classes="box", id="temp")
@@ -37,8 +37,7 @@ class Display(App):
         self.title = "Air Quality"
 
     def on_ready(self) -> None:
-        """Calls the update function and sets the interval
-        """
+        """Calls the update function and sets the interval"""
         self.update()
         self.set_interval(1, self.update)
 
@@ -46,13 +45,10 @@ class Display(App):
         """Refreshes the data in the interval of 1 second."""
 
         sensor_data = self.sensor.get_data()
-        # compensated_temp = Utilities.temperature_compensation(
-        # sensor_data["temperature"])
+        compensated_temp = Utilities.temperature_compensation(sensor_data["temperature"])
 
-        # self.query_one("#temp").update(str(compensated_temp))
-        self.query_one("#footer_right_static").update(
-            str(Utilities.get_ip_address(["eth0", "wlan0", "enp60s0"])))
-        self.query_one("#temp").update(str(sensor_data["temperature"]))
-        self.query_one("#press").update(str(sensor_data["pressure"]))
-        self.query_one("#humid").update(str(sensor_data["humidity"]))
-        self.query_one("#first_pms").update(str(sensor_data["pms"]))
+        self.query_one("#footer_right_static").update(str(Utilities.get_ip_address(["eth0", "wlan0", "enp60s0"])))
+        self.query_one("#temp").update(f"{str(float(round(compensated_temp, 1)))}°C")
+        self.query_one("#press").update(f"{str(float(round(sensor_data['pressure'], 1)))}HPa")
+        self.query_one("#humid").update(f"{str(float(round(sensor_data['humidity'], 1)))}%")
+        self.query_one("#first_pms").update(str(float(round(sensor_data["pms"], 1))))

@@ -6,3 +6,4 @@ netifaces
 rich==13.9.4
 textual
 textual-dev
+python-dotenv== 1.0.1

@@ -1,12 +1,10 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv(dotenv_path="/home/pi/air_quality/config.env")
-
 
 class MainConfig:
     def __init__(self):
-        pass
+        load_dotenv()
 
     @property
     def get_net_interfaces(self) -> list[str]:

@@ -10,6 +10,7 @@ from src.utilities import Utilities
 from src.sensors.enviro_sensor import EnviroSensor
 from src.sensors.pms_sensor import PmsSensor
 from src.main_config import main_cnf
+from src.sensors.sensors_data_format import SensorsDataFormat
 
 
 class Display(App):
@@ -20,6 +21,7 @@ class Display(App):
         super().__init__()
         self.enviro_sensor = EnviroSensor()
         self.pms_sensor = PmsSensor()
+        self.data_formatter = SensorsDataFormat()
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""
@@ -54,12 +56,13 @@ class Display(App):
         compensated_temp = Utilities.temperature_compensation(enviro_data["temperature"])
 
         self.query_one("#footer_right_static").update(str(Utilities.get_ip_address(main_cnf.get_net_interfaces)))
-        self.query_one("#temp").update(f"Temp: {str(float(round(compensated_temp, 1)))}°C")
-        self.query_one("#press").update(f"Pressure: {str(float(round(enviro_data['pressure'], 1)))}HPa")
-        self.query_one("#humid").update(f"Humidity: {str(float(round(enviro_data['humidity'], 1)))}%")
-        self.query_one("#smoke").update(f"Smoke: {str(int(pms_data['smoke']))}µg/m³")
-        self.query_one("#metals").update(f"Metals: {str(int(pms_data['metals']))}µg/m³")
-        self.query_one("#dust").update(f"Dust: {str(int(pms_data['dust']))}µg/m³")
-        self.query_one("#mikro").update(f"Mikro: {str(int((pms_data['mikro'])))}/0.1L")
-        self.query_one("#small").update(f"Small: {str(int(pms_data['small']))}/0.1L")
-        self.query_one("#medium").update(f"Medium: {str(int((pms_data['medium'])))}/0.1L")
+        self.query_one("#temp").update(self.data_formatter.do_format("temperature", compensated_temp))
+        # self.query_one("#temp").update(f"Temp: {str(float(round(compensated_temp, 1)))}°C")
+        self.query_one("#press").update(self.data_formatter.do_format("pressure", enviro_data["pressure"]))
+        self.query_one("#humid").update(self.data_formatter.do_format("humidity", enviro_data["humidity"]))
+        self.query_one("#smoke").update(self.data_formatter.do_format("smoke", pms_data["smoke"]))
+        self.query_one("#metals").update(self.data_formatter.do_format("metals", pms_data["metals"]))
+        self.query_one("#dust").update(self.data_formatter.do_format("dust", pms_data["dust"]))
+        self.query_one("#mikro").update(self.data_formatter.do_format("mikro", pms_data["mikro"]))
+        self.query_one("#small").update(self.data_formatter.do_format("small", pms_data["small"]))
+        self.query_one("#medium").update(self.data_formatter.do_format("medium", pms_data["medium"]))

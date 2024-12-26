@@ -8,12 +8,20 @@ class MainConfig:
 
     @property
     def get_net_interfaces(self) -> list[str]:
-
-        return os.getenv("NET_INTERFACES").split(",")
+        try:
+            if os.getenv("NET_INTERFACES"):
+                return os.getenv("NET_INTERFACES").split(",")
+            else:
+                raise ValueError("NET_INTERFACES is not defined in .env")
+        except ValueError as e:
+            print(e)
 
     @property
     def get_screen_title(self) -> str:
-        return os.getenv("TITLE_SCREEN")
+        try:
+            return os.getenv("TITLE_SCREEN")
+        except Exception as e:
+            print(e)
 
 
 main_cnf = MainConfig()

@@ -11,7 +11,7 @@ class EnviroSensor:
         except Exception:
             ...
 
-    def _get_enviro(self):
+    def _get_enviro(self) -> dict[str, int]:
         enviro_data = {
             "temperature": 0,
             "pressure": 0,

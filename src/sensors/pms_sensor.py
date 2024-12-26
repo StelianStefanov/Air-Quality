@@ -10,7 +10,7 @@ class PmsSensor:
         except Exception:
             ...
 
-    def _get_pms(self):
+    def _get_pms(self) -> dict[str, int]:
         pms_data = {
             "smoke": 0,
             "metals": 0,

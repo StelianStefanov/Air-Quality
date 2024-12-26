@@ -19,7 +19,7 @@ class Utilities:
         return result
 
     @staticmethod
-    def temperature_compensation(raw_temperature):
+    def temperature_compensation(raw_temperature) -> float:
         """The temperature from the sensor show unrealistic data,
         because the raspberry and the display are heating up the sensor.
         That's why here we execute a simple formula that is using the raspberry

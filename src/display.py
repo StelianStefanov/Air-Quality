@@ -57,7 +57,6 @@ class Display(App):
 
         self.query_one("#footer_right_static").update(str(Utilities.get_ip_address(main_cnf.get_net_interfaces)))
         self.query_one("#temp").update(self.data_formatter.do_format("temperature", compensated_temp))
-        # self.query_one("#temp").update(f"Temp: {str(float(round(compensated_temp, 1)))}°C")
         self.query_one("#press").update(self.data_formatter.do_format("pressure", enviro_data["pressure"]))
         self.query_one("#humid").update(self.data_formatter.do_format("humidity", enviro_data["humidity"]))
         self.query_one("#smoke").update(self.data_formatter.do_format("smoke", pms_data["smoke"]))

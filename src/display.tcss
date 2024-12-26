@@ -26,7 +26,32 @@ Screen {
   color: white;
 }
 
-#first_pms {
+#smoke {
+  content-align: center middle;
+  color: white;
+}
+
+#metals {
+  content-align: center middle;
+  color: white;
+}
+
+#dust {
+  content-align: center middle;
+  color: white;
+}
+
+#mikro {
+  content-align: center middle;
+  color: white;
+}
+
+#small {
+  content-align: center middle;
+  color: white;
+}
+
+#medium {
   content-align: center middle;
   color: white;
 }

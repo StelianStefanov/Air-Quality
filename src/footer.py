@@ -1,8 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.binding import Binding
-from textual.widgets import Footer, Label
+from textual.app import ComposeResult
+from textual.widgets import Footer
 from textual.widgets import Static
-from textual.reactive import reactive
+
 
 from src.utilities import Utilities
 

@@ -2,7 +2,7 @@ import netifaces
 from subprocess import PIPE, Popen
 
 
-class Utilities():
+class Utilities:
 
     @staticmethod
     def get_ip_address(net_interfaces) -> str:
@@ -30,11 +30,10 @@ class Utilities():
         def get_cpu_temperature() -> float:
             """Gets the raspberry pi CPU temperature"""
 
-            process = Popen(["vcgencmd", "measure_temp"],
-                            stdout=PIPE, universal_newlines=True)
+            process = Popen(["vcgencmd", "measure_temp"], stdout=PIPE, universal_newlines=True)
             output, _error = process.communicate()
 
-            return float(output[output.index("=") + 1:output.rindex("'")])
+            return float(output[output.index("=") + 1 : output.rindex("'")])
 
         cpu_temps = [get_cpu_temperature()] * 5
 

@@ -11,11 +11,26 @@ class PmsSensor:
             ...
 
     def _get_pms(self):
-        pms_data = {"pms": 0}
+        pms_data = {
+            "smoke": 0,
+            "metals": 0,
+            "dust": 0,
+            "mikro": 0,
+            "small": 0,
+            "medium": 0,
+        }
 
         try:
             if isinstance(self.pms, PMS5003):
-                pms_data["pms"] = self.pms.read().pm_ug_per_m3(1.0)
+                sensor_data = self.pms.read()
+
+                pms_data["smoke"] = sensor_data.pm_ug_per_m3(1.0)
+                pms_data["metals"] = sensor_data.pm_ug_per_m3(2.5)
+                pms_data["dust"] = sensor_data.pm_ug_per_m3(10)
+
+                pms_data["mikro"] = sensor_data.pm_per_1l_air(0.3)
+                pms_data["small"] = sensor_data.pm_per_1l_air(0.5)
+                pms_data["medium"] = sensor_data.pm_per_1l_air(1.0)
         except Exception:
             ...
 

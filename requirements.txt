@@ -1,9 +1,10 @@
 pillow==11.0.0	
 enviroplus==1.0.2
 pms5003==1.0.1
-requests
-netifaces
+requests==2.32.3
+netifaces==0.11.0
 rich==13.9.4
-textual
-textual-dev
-python-dotenv== 1.0.1
+textual==1.0.0
+textual-dev==1.7.0
+python-dotenv==1.0.1
+fastapi[standard]==0.115.6

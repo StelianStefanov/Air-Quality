@@ -8,5 +8,8 @@ help: # Show this help
 tailwind: # Tailwindcss rebuild (watch) tops="--minify"
 	./tailwindcss -i src/web/static/css/builder/tailwindcss-in.css -o src/web/static/css/tailwindcss.css --watch $(tops)
 
+tailwindx64: # Tailwindcss rebuild (watch) tops="--minify"
+	./tailwindcssx64 -i src/web/static/css/builder/tailwindcss-in.css -o src/web/static/css/tailwindcss.css --watch $(tops)
+
 web-start: # starts web server
 	fastapi dev www.py --host 0.0.0.0 --port 8000

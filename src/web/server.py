@@ -1,4 +1,5 @@
 """FastApi views"""
+
 import random
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -6,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from src.main_config import main_cnf
+
 app = FastAPI()
 
 STATIC_DIR = main_cnf.root_dir / "src/web/static"
@@ -22,8 +24,11 @@ def home_page(request: Request):
     """Home page view"""
 
     return templates.TemplateResponse(
-        request=request, name="index.html", context={
+        request=request,
+        name="index.html",
+        context={
             "num1": random.randint(1, 10000),
-            "num2": random.randint(1, 100)
-        }
+            "num2": random.randint(1, 100),
+            "num3": "stely",
+        },
     )

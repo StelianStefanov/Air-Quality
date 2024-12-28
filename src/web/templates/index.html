@@ -4,25 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Website</title>
+    <title>Air Quality</title>
     <link href="{{ url_for('static', path='/css/tailwindcss.css') }}" rel="stylesheet">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <meta http-equiv="refresh" content="2">
   </head>
   <body>
     <main>
-        <h1>Welcome to My Website</h1> 
-        <div class="mehor">Opassss uiuiui</div>
-        <div class="flex">
-            <div class="flex-none w-14 ...">
-              01
-            </div>
-            <div class="flex-initial w-64 ...">
-              02
-            </div>
-            <div class="flex-initial w-32 ...">
-              03
-            </div>
-          </div>
+      <div class="flex flex-wrap justify-between gap-2 p-2">
+
+        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
+            {{num1}}
+        </div>
+    
+        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
+          {{num2}}
+        </div>
+    
+        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
+            3
+        </div>
+    
+        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
+            4
+        </div>
+    
+        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
+            5
+        </div>
+    
+        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
+            6
+        </div>
+    
+    </div>
     </main>
   </body>
 </html>

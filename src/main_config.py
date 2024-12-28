@@ -1,5 +1,7 @@
-from dotenv import load_dotenv
+from pathlib import Path
 import os
+
+from dotenv import load_dotenv
 
 
 class MainConfig:
@@ -22,6 +24,12 @@ class MainConfig:
             return os.getenv("TITLE_SCREEN")
         except Exception as e:
             print(e)
+
+    @property
+    def root_dir(self) -> Path:
+        """Project root"""
+
+        return Path.cwd()
 
 
 main_cnf = MainConfig()

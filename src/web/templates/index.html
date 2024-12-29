@@ -4,39 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Air Quality</title>
-    <link href="{{ url_for('static', path='/css/tailwindcss.css') }}" rel="stylesheet">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <title>{{page_title}}</title>
+    <link href="{{ url_for('static', path='/css/tailwindcss.css?v=')}}{{assets_version}}" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', path='/images/favicon.png') }}" type="image/png">
     <meta http-equiv="refresh" content="2">
   </head>
-  <body class="bg-black">
+  <body class="bg-slate-900">
     <main">
+     
+      <div class="flex flex-wrap justify-between gap-2 p-2 text-slate-200 bg-gray-800">
+        <div>
+          {{date}}
+        </div>
+
+        <div>
+          {{page_title}}
+        </div>
+
+        <div>
+          {{clock}}
+        </div>
+      </div>
       
       <div class="flex flex-wrap justify-between gap-2 p-2">
 
-        <div class="flex justify-center items-center border h-32 w-44 bg-red-100 text-orange-400 ">
-            {{num1}}
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent {{temp_color}} text-3xl ">
+            {{temp}}
         </div>
     
-        <div class="flex justify-center items-center border h-32 w-44 bg-red-100 text-orange-400">
-          {{num2}}
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+          {{pressure}}
         </div>
     
-        <div class="flex justify-center items-center border h-32 w-44 bg-red-100 text-orange-400">
-            {{num3}}
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+            {{humidity}}
         </div>
     
-        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
-            4
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+            {{smoke}}
         </div>
     
-        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
-            5
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+            {{metals}}
         </div>
     
-        <div class="flex justify-center items-center border h-32 w-44 bg-blue-100">
-            6
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+            {{dust}}
         </div>
+
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+          {{mikro}}
+        </div>
+
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+          {{small}}
+        </div>
+
+        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
+          {{medium}}
+        </div>
+
     
     </div>
     </main>

@@ -1,6 +1,8 @@
 import netifaces
 from subprocess import PIPE, Popen
 
+from src.main_config import main_cnf
+
 
 class Utilities:
 
@@ -25,7 +27,7 @@ class Utilities:
         That's why here we execute a simple formula that is using the raspberry
         temp and the sensor temp."""
 
-        factor = 2.25
+        factor = main_cnf.compensation_temp_factor
 
         def get_cpu_temperature() -> float:
             """Gets the raspberry pi CPU temperature"""

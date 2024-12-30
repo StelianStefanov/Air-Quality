@@ -26,42 +26,53 @@
         </div>
       </div>
       
-      <div class="flex flex-wrap justify-between gap-2 p-2">
+      <div class="sensors-container">
 
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent {{temp_color}} text-3xl ">
-            {{temp}}
+        <div class="{{temp_color}} sensor-content">
+          <div class="sensor-title">Temperature</div>
+          <div class="sensor-value">🌡️{{temp}}</div>
         </div>
     
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-          {{pressure}}
+        <div class="{{pressure_color}} sensor-content">
+          <div class="sensor-title">Pressure</div>
+          <div class="sensor-value"><span class="sensor-emoji">💨</span>{{pressure}}</div> 
         </div>
     
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-            {{humidity}}
+        <div class="{{humidity_color}} sensor-content">
+          <div class="sensor-title">Humidity</div>
+          <div class="sensor-value">💧{{humidity}}</div>
         </div>
     
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-            {{smoke}}
+        <div class="{{smoke_color}} sensor-content">
+          <div class="sensor-title">Smoke</div>  
+          <div class="sensor-value">💧{{smoke}}</div>
         </div>
     
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-            {{metals}}
+        <div class="{{metals_color}} sensor-content">
+          <div class="sensor-title">Metals</div>   
+          <div class="sensor-value">💧{{metals}}</div>
         </div>
     
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-            {{dust}}
-        </div>
-
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-          {{mikro}}
-        </div>
-
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-          {{small}}
+        <div class="{{dust_color}} sensor-content">
+          <div class="sensor-title">Dust</div>     
+          <div class="sensor-value">💧{{dust}}</div>
         </div>
 
-        <div class="flex justify-center items-center h-32 w-44 bg-transparent text-slate-200 text-3xl">
-          {{medium}}
+        <div class="{{mikro_color}} sensor-content">
+          <div class="sensor-title">Mikro</div>  
+          <div class="sensor-value">💧{{mikro}}</div>
+        </div>
+
+        <div class="{{small_color}} sensor-content">
+          <div class="sensor-title">Small</div>  
+          <div class="sensor-value">
+            <img width="28" height="28" src="{{ url_for('static', path='/images/small.png') }}"><div>{{small}}</div>
+          </div>
+        </div>
+
+        <div class="{{medium_color}} sensor-content">
+          <div class="sensor-title">Medium</div>  
+          <div class="sensor-value">💧{{medium}}</div>
         </div>
 
     

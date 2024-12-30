@@ -13,6 +13,7 @@ from src.main_config import main_cnf
 from src.sensors.enviro_sensor import EnviroSensor
 from src.sensors.pms_sensor import PmsSensor
 from src.utilities import Utilities
+from src.web.sensor_colors import SensorColors
 
 
 app = FastAPI()
@@ -42,7 +43,6 @@ def home_page(request: Request):
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
     date = datetime.now().strftime("%x")
     clock = datetime.now().strftime("%H:%M")
-    temp_color = "text-red-600"
     assets_version = main_cnf.assets_version
 
     return templates.TemplateResponse(
@@ -61,7 +61,15 @@ def home_page(request: Request):
             "date": date,
             "clock": clock,
             "page_title": "Air Quality",
-            "temp_color": temp_color,
+            "temp_color": SensorColors.temperature(compensated_temp),
+            "pressure_color": SensorColors.pressure(data["pressure"]),
+            "humidity_color": SensorColors.humidity(data["humidity"]),
+            "smoke_color": SensorColors.smoke(data["smoke"]),
+            "metals_color": SensorColors.metals(data["metals"]),
+            "dust_color": SensorColors.dust(data["dust"]),
+            "mikro_color": SensorColors.mikro(data["mikro"]),
+            "small_color": SensorColors.small(data["small"]),
+            "medium_color": SensorColors.medium(data["medium"]),
             "assets_version": assets_version,
         },
     )

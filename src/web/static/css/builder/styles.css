@@ -1,3 +1,19 @@
-.mehor {
-    @apply cursor-pointer w-[38px] h-[38px];
+.sensors-container {
+   @apply flex flex-wrap justify-between;
+}
+
+.sensors-container .sensor-content {
+    @apply h-32 w-[177px] text-3xl;
+}
+
+.sensors-container .sensor-content .sensor-title {
+    @apply text-center text-white pb-0.5;
+}
+
+.sensor-value {
+    @apply text-center flex;
+}
+
+.sensor-emoji {
+    @apply text-2xl;
 }

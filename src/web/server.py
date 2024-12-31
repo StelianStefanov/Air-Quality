@@ -8,6 +8,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import ads1015
 
 from src.main_config import main_cnf
 from src.sensors.enviro_sensor import EnviroSensor
@@ -36,40 +37,58 @@ def read_json() -> None:
         print(e)
 
 
-@app.get("/", response_class=HTMLResponse)
-def home_page(request: Request):
-    """Home page view"""
+def get_context():
+    """View Context"""
     data = read_json()
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
     date = datetime.now().strftime("%x")
     clock = datetime.now().strftime("%H:%M")
     assets_version = main_cnf.assets_version
 
+    # https://github.com/pimoroni/enviroplus-python/blob/main/enviroplus/gas.py
+    # adc = ads1015.ADS1015(i2c_addr=0x49)
+    # adc_type = adc.detect_chip_type()
+    # ox = adc.get_voltage("in0/gnd")
+    # red = adc.get_voltage("in1/gnd")
+    # nh3 = adc.get_voltage("in2/gnd")
+    # ox = ((ox * 56000) / (3.3 - ox)) / 1000
+    # red = (red * 56000) / (3.3 - red)
+    # nh3 = (nh3 * 56000) / (3.3 - nh3)
+    # print(ox, red, nh3)
+
+    return {
+        "temp": f"{round(compensated_temp, 1)}°C",
+        "pressure": f"{round(data['pressure'], 1)}HPa",
+        "humidity": f"{round(data['humidity'], 1)}%",
+        "smoke": f"{data['smoke']}µg/m³",
+        "metals": f"{data['metals']}µg/m³",
+        "dust": f"{data['dust']}µg/m³",
+        "mikro": f"{data['mikro']}/0.1L",
+        "small": f"{data['small']}/0.1L",
+        "medium": f"{data['medium']}/0.1L",
+        "date": date,
+        "clock": clock,
+        "page_title": "Air Quality",
+        "temp_color": SensorColors.temperature(compensated_temp),
+        "pressure_color": SensorColors.pressure(data["pressure"]),
+        "humidity_color": SensorColors.humidity(data["humidity"]),
+        "smoke_color": SensorColors.smoke(data["smoke"]),
+        "metals_color": SensorColors.metals(data["metals"]),
+        "dust_color": SensorColors.dust(data["dust"]),
+        "mikro_color": SensorColors.mikro(data["mikro"]),
+        "small_color": SensorColors.small(data["small"]),
+        "medium_color": SensorColors.medium(data["medium"]),
+        "assets_version": assets_version,
+        "reload_interval": main_cnf.web_interval_reload,
+    }
+
+
+@app.get("/", response_class=HTMLResponse)
+def home_page(request: Request):
+    """Home page view"""
+
     return templates.TemplateResponse(
         request=request,
         name="index.html",
-        context={
-            "temp": f"{round(compensated_temp, 1)}°C",
-            "pressure": f"{round(data['pressure'], 1)}HPa",
-            "humidity": f"{round(data['humidity'], 1)}%",
-            "smoke": f"{data['smoke']}µg/m³",
-            "metals": f"{data['metals']}µg/m³",
-            "dust": f"{data['dust']}µg/m³",
-            "mikro": f"{data['mikro']}/0.1L",
-            "small": f"{data['small']}/0.1L",
-            "medium": f"{data['medium']}/0.1L",
-            "date": date,
-            "clock": clock,
-            "page_title": "Air Quality",
-            "temp_color": SensorColors.temperature(compensated_temp),
-            "pressure_color": SensorColors.pressure(data["pressure"]),
-            "humidity_color": SensorColors.humidity(data["humidity"]),
-            "smoke_color": SensorColors.smoke(data["smoke"]),
-            "metals_color": SensorColors.metals(data["metals"]),
-            "dust_color": SensorColors.dust(data["dust"]),
-            "mikro_color": SensorColors.mikro(data["mikro"]),
-            "small_color": SensorColors.small(data["small"]),
-            "medium_color": SensorColors.medium(data["medium"]),
-            "assets_version": assets_version,
-        },
+        context=get_context(),
     )

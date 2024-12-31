@@ -44,5 +44,9 @@ class MainConfig:
         except ValueError:
             return default_factor
 
+    @property
+    def web_interval_reload(self) -> int:
+        return int(os.getenv("WEB_INTERVAL_RELOAD", default=2))
+
 
 main_cnf = MainConfig()

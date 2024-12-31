@@ -7,13 +7,17 @@
 }
 
 .sensors-container .sensor-content .sensor-title {
-    @apply text-center text-white pb-0.5;
+    @apply text-center text-white pb-0.5 text-gray-400 text-2xl;
 }
 
 .sensor-value {
-    @apply text-center flex;
+    @apply text-center;
 }
 
 .sensor-emoji {
     @apply text-2xl;
+}
+
+#smoke, #metals, #dust {
+    @apply flex justify-center;
 }

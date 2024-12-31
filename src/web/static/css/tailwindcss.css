@@ -14,18 +14,25 @@
 .sensors-container .sensor-content .sensor-title {
   padding-bottom: 0.125rem;
   text-align: center;
-  --tw-text-opacity: 1;
+  font-size: 1.5rem;
+  line-height: 2rem;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
 }
 
 .sensor-value {
-  display: flex;
   text-align: center;
 }
 
 .sensor-emoji {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+#smoke, #metals, #dust {
+  display: flex;
+  justify-content: center;
 }
 
 *, ::before, ::after {
@@ -588,6 +595,10 @@ video {
   position: static;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
 .flex {
   display: flex;
 }
@@ -626,17 +637,31 @@ video {
   padding: 0.5rem;
 }
 
-.pb-0 {
-  padding-bottom: 0px;
+.pb-0\.5 {
+  padding-bottom: 0.125rem;
 }
 
 .text-center {
   text-align: center;
 }
 
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
 }
 
 .text-green-600 {

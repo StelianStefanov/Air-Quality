@@ -1,7 +1,7 @@
 class SensorsDataFormat:
 
     def _temperature(self, value: float) -> str:
-        formatted_temperature = round(value, 1)
+        formatted_temperature = round(value, 2)
         if value <= 15.0:
             formatted_temperature = f"[dodger_blue1]{formatted_temperature}°C[/dodger_blue1]"
         elif 15.0 < value <= 25.0:
@@ -11,7 +11,7 @@ class SensorsDataFormat:
         else:
             formatted_temperature = f"[red]{formatted_temperature}°C[/red]"
 
-        return f"Temp: {formatted_temperature}"
+        return f"Temperature: {formatted_temperature}"
 
     def _pressure(self, value: float) -> str:
         formatted_pressure = round(value, 1)
@@ -131,6 +131,54 @@ class SensorsDataFormat:
             formatted_medium = f"[red]{formatted_medium}/0.1L[/red]"
 
         return f"Medium: {formatted_medium}"
+
+    def _oxide(self, value: float) -> str:
+        formatted_oxide = round(value, 2)
+
+        if value <= 50.0:
+            formatted_oxide = f"[dodger_blue1]{formatted_oxide}K0[/dodger_blue1]"
+        elif 50.0 < value <= 100.0:
+            formatted_oxide = f"[green]{formatted_oxide}K0[/green]"
+        elif 100.0 < value <= 200.0:
+            formatted_oxide = f"[yellow]{formatted_oxide}K0[/yellow]"
+        elif 200.0 < value <= 400.0:
+            formatted_oxide = f"[orange_red1]{formatted_oxide}K0[/orange_red1]"
+        else:
+            formatted_oxide = f"[red]{formatted_oxide}K0[/red]"
+
+        return f"Oxidation: {formatted_oxide}"
+
+    def _reduce(self, value: float) -> str:
+        formatted_reduce = round(value, 2)
+
+        if value <= 50.0:
+            formatted_reduce = f"[dodger_blue1]{formatted_reduce}K0[/dodger_blue1]"
+        elif 50.0 < value <= 100.0:
+            formatted_reduce = f"[green]{formatted_reduce}K0[/green]"
+        elif 100.0 < value <= 200.0:
+            formatted_reduce = f"[yellow]{formatted_reduce}K0[/yellow]"
+        elif 200.0 < value <= 400.0:
+            formatted_reduce = f"[orange_red1]{formatted_reduce}K0[/orange_red1]"
+        else:
+            formatted_reduce = f"[red]{formatted_reduce}K0[/red]"
+
+        return f"Reduce: {formatted_reduce}"
+
+    def _nh3(self, value: float) -> str:
+        formatted_nh3 = round(value, 2)
+
+        if value <= 50.0:
+            formatted_nh3 = f"[dodger_blue1]{formatted_nh3}K0[/dodger_blue1]"
+        elif 50.0 < value <= 100.0:
+            formatted_nh3 = f"[green]{formatted_nh3}K0[/green]"
+        elif 100.0 < value <= 200.0:
+            formatted_nh3 = f"[yellow]{formatted_nh3}K0[/yellow]"
+        elif 200.0 < value <= 400.0:
+            formatted_nh3 = f"[orange_red1]{formatted_nh3}K0[/orange_red1]"
+        else:
+            formatted_nh3 = f"[red]{formatted_nh3}K0[/red]"
+
+        return f"Amonia: {formatted_nh3}"
 
     def do_format(self, type_: str, value: int | float) -> str:
         data_format_method = getattr(self, f"_{type_}")

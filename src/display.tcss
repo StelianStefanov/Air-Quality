@@ -4,7 +4,6 @@ Screen {
 }
 
 .box {
-    height: 100%;
     border: solid black;
 }
 #st {
@@ -56,6 +55,21 @@ Screen {
   color: white;
 }
 
+#oxide {
+  content-align: center middle;
+  color: white;
+}
+
+#reduce {
+  content-align: center middle;
+  color: white;
+}
+
+#nh3 {
+  content-align: center middle;
+  color: white;
+}
+
 HeaderIcon {
         width: 10
     }
@@ -74,4 +88,4 @@ Footer {
     #footer_right_static {
       text-align: right;
       }
-}
+} 

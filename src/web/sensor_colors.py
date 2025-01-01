@@ -134,3 +134,51 @@ class SensorColors:
             medium_color = "text-red-600"
 
         return medium_color
+
+    @staticmethod
+    def oxide(value: float) -> str:
+
+        if value <= 50.0:
+            oxide_color = "text-blue-600"
+        elif 50.0 < value <= 100.0:
+            oxide_color = "text-green-600"
+        elif 100.0 < value <= 200.0:
+            oxide_color = "text-yellow-400"
+        elif 200.0 < value <= 400.0:
+            oxide_color = "text-orange-600"
+        else:
+            oxide_color = "text-red-600"
+
+        return oxide_color
+
+    @staticmethod
+    def reduce(value: float) -> str:
+
+        if value <= 50.0:
+            reduce_color = "text-blue-600"
+        elif 50.0 < value <= 100.0:
+            reduce_color = "text-green-600"
+        elif 100.0 < value <= 200.0:
+            reduce_color = "text-yellow-400"
+        elif 200.0 < value <= 400.0:
+            reduce_color = "text-orange-600"
+        else:
+            reduce_color = "text-red-600"
+
+        return reduce_color
+
+    @staticmethod
+    def nh3(value: float) -> str:
+
+        if value <= 50.0:
+            nh3_color = "text-blue-600"
+        elif 50.0 < value <= 100.0:
+            nh3_color = "text-green-600"
+        elif 100.0 < value <= 200.0:
+            nh3_color = "text-yellow-400"
+        elif 200.0 < value <= 400.0:
+            nh3_color = "text-orange-600"
+        else:
+            nh3_color = "text-red-600"
+
+        return nh3_color

@@ -97,5 +97,5 @@ def page_dev(request: Request):
     return templates.TemplateResponse(
         request=request,
         name="dev.html",
-        context=context,
+        context=get_context(),
     )

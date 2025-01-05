@@ -43,13 +43,13 @@ class SensorColors:
     @staticmethod
     def smoke(value: int) -> str:
 
-        if value <= 5.0:
+        if value <= 15.0:
             smoke_color = "text-blue-600"
-        elif 5.0 < value <= 20.0:
+        elif 15.0 < value <= 30.0:
             smoke_color = "text-green-600"
-        elif 20.0 < value <= 40.0:
+        elif 30.0 < value <= 100.0:
             smoke_color = "text-yellow-400"
-        elif 40.0 < value <= 60.0:
+        elif 100.0 < value <= 300.0:
             smoke_color = "text-orange-600"
         else:
             smoke_color = "text-red-600"
@@ -59,13 +59,13 @@ class SensorColors:
     @staticmethod
     def metals(value: int) -> str:
 
-        if value <= 10.0:
+        if value <= 12.0:
             metals_color = "text-blue-600"
-        elif 10.0 < value <= 25.0:
+        elif 12.0 < value <= 35.0:
             metals_color = "text-green-600"
-        elif 25.0 < value <= 50.0:
+        elif 35.0 < value <= 60.0:
             metals_color = "text-yellow-400"
-        elif 50.0 < value <= 100.0:
+        elif 60.0 < value <= 100.0:
             metals_color = "text-orange-600"
         else:
             metals_color = "text-red-600"
@@ -74,13 +74,13 @@ class SensorColors:
 
     @staticmethod
     def dust(value: int) -> str:
-        if value <= 30.0:
+        if value <= 54.0:
             dust_color = "text-blue-600"
-        elif 30.0 < value <= 50.0:
+        elif 54.0 < value <= 155.0:
             dust_color = "text-green-600"
-        elif 50.0 < value <= 100.0:
+        elif 155.0 < value <= 255.0:
             dust_color = "text-yellow-400"
-        elif 100.0 < value <= 150.0:
+        elif 255.0 < value <= 354.0:
             dust_color = "text-orange-600"
         else:
             dust_color = "text-red-600"
@@ -90,13 +90,13 @@ class SensorColors:
     @staticmethod
     def mikro(value: float) -> str:
 
-        if value <= 100.0:
+        if value <= 2000.0:
             mikro_color = "text-blue-600"
-        elif 100.0 < value <= 250.0:
+        elif 2000.0 < value <= 10000.0:
             mikro_color = "text-green-600"
-        elif 250.0 < value <= 500.0:
+        elif 10000.0 < value <= 50000.0:
             mikro_color = "text-yellow-400"
-        elif 500.0 < value <= 1000.0:
+        elif 50000.0 < value <= 100000.0:
             mikro_color = "text-orange-600"
         else:
             mikro_color = "text-red-600"
@@ -106,13 +106,13 @@ class SensorColors:
     @staticmethod
     def small(value: float) -> str:
 
-        if value <= 100.0:
+        if value <= 2000.0:
             small_color = "text-blue-600"
-        elif 100.0 < value <= 200.0:
+        elif 2000.0 < value <= 5000.0:
             small_color = "text-green-600"
-        elif 200.0 < value <= 400.0:
+        elif 5000.0 < value <= 1000.0:
             small_color = "text-yellow-400"
-        elif 400.0 < value <= 800.0:
+        elif 1000.0 < value <= 2000.0:
             small_color = "text-orange-600"
         else:
             small_color = "text-red-600"
@@ -122,13 +122,13 @@ class SensorColors:
     @staticmethod
     def medium(value: float) -> str:
 
-        if value <= 50.0:
+        if value <= 1000.0:
             medium_color = "text-blue-600"
-        elif 50.0 < value <= 100.0:
+        elif 1000.0 < value <= 2000.0:
             medium_color = "text-green-600"
-        elif 100.0 < value <= 200.0:
+        elif 2000.0 < value <= 3000.0:
             medium_color = "text-yellow-400"
-        elif 200.0 < value <= 400.0:
+        elif 3000.0 < value <= 4000.0:
             medium_color = "text-orange-600"
         else:
             medium_color = "text-red-600"
@@ -138,13 +138,13 @@ class SensorColors:
     @staticmethod
     def oxide(value: float) -> str:
 
-        if value <= 50.0:
+        if value <= 10.0:
             oxide_color = "text-blue-600"
-        elif 50.0 < value <= 100.0:
+        elif 10.0 < value <= 25.0:
             oxide_color = "text-green-600"
-        elif 100.0 < value <= 200.0:
+        elif 25.0 < value <= 40.0:
             oxide_color = "text-yellow-400"
-        elif 200.0 < value <= 400.0:
+        elif 50.0 < value <= 100.0:
             oxide_color = "text-orange-600"
         else:
             oxide_color = "text-red-600"

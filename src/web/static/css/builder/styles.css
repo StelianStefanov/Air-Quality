@@ -1,21 +1,20 @@
 .sensors-container {
-   @apply flex flex-wrap justify-between;
+    @apply grid grid-cols-2 xl:grid-cols-5 gap-2 px-1 py-1;
+}
+
+.sensors-container .sensor-title {
+    @apply text-center text-white pb-0.5 text-gray-400 text-2xl;
 }
 
 .sensors-container .sensor-content {
-    @apply h-32 w-[177px] text-3xl;
-}
-
-.sensors-container .sensor-content .sensor-title {
-    @apply text-center text-white pb-0.5 text-gray-400 text-2xl;
+    @apply w-full h-24
 }
 
 .sensor-value {
     @apply m-auto text-center;
-}
-
-.sensor-emoji {
-    @apply text-2xl;
+    @apply text-3xl;
+    @apply text-white;
+    @apply gap-2;
 }
 
 #smoke, #metals, #dust {

@@ -1,0 +1,14 @@
+.sensor-name {
+    @apply m-auto text-center;
+    @apply text-3xl;
+    @apply text-white;
+    @apply gap-2;
+}
+
+.sensor-titlename {
+    @apply text-center text-white pb-0.5 text-gray-400 text-2xl
+}
+
+.sensor-cont {
+    @apply grid grid-cols-2 xl:grid-cols-5 gap-2 px-1 py-1;
+}

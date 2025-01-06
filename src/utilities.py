@@ -6,10 +6,9 @@ from src.logger import Logger
 
 
 class Utilities:
-    def __init__(self):
-        self.logger = Logger()
 
-    def get_ip_address(self, net_interfaces) -> str:
+    @staticmethod
+    def get_ip_address(net_interfaces) -> str:
         result = ""
 
         for name in net_interfaces:
@@ -20,7 +19,7 @@ class Utilities:
                     result = interfaces[0]["addr"]
                     break
             except Exception as e:
-                self.logger.error(e)
+                Logger().error(e)
 
         return result
 
@@ -35,17 +34,23 @@ class Utilities:
 
         def get_cpu_temperature() -> float:
             """Gets the raspberry pi CPU temperature"""
+            try:
+                process = Popen(["vcgencmd", "measure_temp"], stdout=PIPE, universal_newlines=True)
+                output, _error = process.communicate()
 
-            process = Popen(["vcgencmd", "measure_temp"], stdout=PIPE, universal_newlines=True)
-            output, _error = process.communicate()
+                return float(output[output.index("=") + 1 : output.rindex("'")])
+            except FileNotFoundError as e:
+                Logger().error(e)
+                return None
 
-            return float(output[output.index("=") + 1 : output.rindex("'")])
+        if get_cpu_temperature() is not None:
+            cpu_temps = [get_cpu_temperature()] * 5
 
-        cpu_temps = [get_cpu_temperature()] * 5
+            cpu_temp = get_cpu_temperature()
+            # Smooth out with some averaging to decrease jitter
+            cpu_temps = cpu_temps[1:] + [cpu_temp]
+            avg_cpu_temp = sum(cpu_temps) / float(len(cpu_temps))
 
-        cpu_temp = get_cpu_temperature()
-        # Smooth out with some averaging to decrease jitter
-        cpu_temps = cpu_temps[1:] + [cpu_temp]
-        avg_cpu_temp = sum(cpu_temps) / float(len(cpu_temps))
-
-        return raw_temperature - ((avg_cpu_temp - raw_temperature) / factor)
+            return raw_temperature - ((avg_cpu_temp - raw_temperature) / factor)
+        else:
+            return raw_temperature

@@ -22,12 +22,11 @@ class Display(App):
     def __init__(self):
         super().__init__()
         self.logger = Logger()
-        self.utils = Utilities()
         self.enviro_sensor = EnviroSensor()
         self.pms_sensor = PmsSensor()
         self.enviro_gas_sensor = EnviroGas()
         self.data_formatter = SensorsDataFormat()
-        self.network_ip = str(self.utils.get_ip_address(main_cnf.get_net_interfaces))
+        self.network_ip = str(Utilities.get_ip_address(main_cnf.get_net_interfaces))
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""

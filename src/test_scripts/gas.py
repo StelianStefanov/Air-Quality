@@ -1,10 +1,8 @@
 import ads1015
-from src.logger import Logger
 
 
 class EnviroGas:
     def __init__(self):
-        self.logger = Logger()
 
         self.adc = None
 
@@ -12,7 +10,7 @@ class EnviroGas:
             self.adc = ads1015.ADS1015(i2c_addr=0x49)
             self.adc_type = self.adc.detect_chip_type()
         except Exception as e:
-            self.logger.error(e)
+            ...
 
     def _get_gas(self):
         gas_data = {
@@ -27,7 +25,7 @@ class EnviroGas:
                 self.red = self.adc.get_voltage("in1/gnd")
                 self.nh3 = self.adc.get_voltage("in2/gnd")
         except Exception as e:
-            self.logger.error(e)
+            print(e)
 
         gas_data["oxide"] = ((self.ox * 56000) / (3.3 - self.ox)) / 1000
         gas_data["reduce"] = ((self.red * 56000) / (3.3 - self.red)) / 1000
@@ -37,3 +35,8 @@ class EnviroGas:
 
     def get_data(self) -> dict[str, int]:
         return self._get_gas()
+
+
+if __name__ == "__main__":
+    gas = EnviroGas()
+    print(gas.get_data())

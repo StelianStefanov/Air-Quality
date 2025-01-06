@@ -110,9 +110,9 @@ class SensorColors:
             small_color = "text-blue-600"
         elif 2000.0 < value <= 5000.0:
             small_color = "text-green-600"
-        elif 5000.0 < value <= 1000.0:
+        elif 5000.0 < value <= 10000.0:
             small_color = "text-yellow-400"
-        elif 1000.0 < value <= 2000.0:
+        elif 10000.0 < value <= 20000.0:
             small_color = "text-orange-600"
         else:
             small_color = "text-red-600"

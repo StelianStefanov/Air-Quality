@@ -41,13 +41,13 @@ class SensorsDataFormat:
 
     def _smoke(self, value: int) -> str:
         formatted_smoke = round(value, 1)
-        if value <= 5.0:
+        if value <= 15.0:
             formatted_smoke = f"[dodger_blue1]{formatted_smoke}µg/m³[/dodger_blue1]"
-        elif 5.0 < value <= 20.0:
+        elif 15.0 < value <= 30.0:
             formatted_smoke = f"[green]{formatted_smoke}µg/m³[/green]"
-        elif 20.0 < value <= 40.0:
+        elif 30.0 < value <= 100.0:
             formatted_smoke = f"[yellow]{formatted_smoke}µg/m³[/yellow]"
-        elif 40.0 < value <= 60.0:
+        elif 100.0 < value <= 300.0:
             formatted_smoke = f"[orange_red1]{formatted_smoke}µg/m³[/orange_red1]"
         else:
             formatted_smoke = f"[red]{formatted_smoke}µg/m³[/red]"
@@ -56,13 +56,13 @@ class SensorsDataFormat:
 
     def _metals(self, value: int) -> str:
         formatted_metals = round(value, 1)
-        if value <= 10.0:
+        if value <= 12.0:
             formatted_metals = f"[dodger_blue1]{formatted_metals}µg/m³[/dodger_blue1]"
-        elif 10.0 < value <= 25.0:
+        elif 12.0 < value <= 35.0:
             formatted_metals = f"[green]{formatted_metals}µg/m³[/green]"
-        elif 25.0 < value <= 50.0:
+        elif 35.0 < value <= 60.0:
             formatted_metals = f"[yellow]{formatted_metals}µg/m³[/yellow]"
-        elif 50.0 < value <= 100.0:
+        elif 60.0 < value <= 100.0:
             formatted_metals = f"[orange_red1]{formatted_metals}µg/m³[/orange_red1]"
         else:
             formatted_metals = f"[red]{formatted_metals}µg/m³[/red]"
@@ -71,13 +71,13 @@ class SensorsDataFormat:
 
     def _dust(self, value: int) -> str:
         formatted_dust = round(value, 1)
-        if value <= 30.0:
+        if value <= 54.0:
             formatted_dust = f"[dodger_blue1]{formatted_dust}µg/m³[/dodger_blue1]"
-        elif 30.0 < value <= 50.0:
+        elif 54.0 < value <= 155.0:
             formatted_dust = f"[green]{formatted_dust}µg/m³[/green]"
-        elif 50.0 < value <= 100.0:
+        elif 155.0 < value <= 255.0:
             formatted_dust = f"[yellow]{formatted_dust}µg/m³[/yellow]"
-        elif 100.0 < value <= 150.0:
+        elif 255.0 < value <= 354.0:
             formatted_dust = f"[orange_red1]{formatted_dust}µg/m³[/orange_red1]"
         else:
             formatted_dust = f"[red]{formatted_dust}µg/m³[/red]"
@@ -87,13 +87,13 @@ class SensorsDataFormat:
     def _mikro(self, value: float) -> str:
         formatted_mikro = round(value, 1)
 
-        if value <= 100.0:
+        if value <= 2000.0:
             formatted_mikro = f"[dodger_blue1]{formatted_mikro}/0.1L[/dodger_blue1]"
-        elif 100.0 < value <= 250.0:
+        elif 2000.0 < value <= 10000.0:
             formatted_mikro = f"[green]{formatted_mikro}/0.1L[/green]"
-        elif 250.0 < value <= 500.0:
+        elif 10000.0 < value <= 50000.0:
             formatted_mikro = f"[yellow]{formatted_mikro}/0.1L[/yellow]"
-        elif 500.0 < value <= 1000.0:
+        elif 50000.0 < value <= 100000.0:
             formatted_mikro = f"[orange_red1]{formatted_mikro}/0.1L[/orange_red1]"
         else:
             formatted_mikro = f"[red]{formatted_mikro}/0.1L[/red]"
@@ -103,13 +103,13 @@ class SensorsDataFormat:
     def _small(self, value: float) -> str:
         formatted_small = round(value, 1)
 
-        if value <= 100.0:
+        if value <= 2000.0:
             formatted_small = f"[dodger_blue1]{formatted_small}/0.1L[/dodger_blue1]"
-        elif 100.0 < value <= 200.0:
+        elif 2000.0 < value <= 5000.0:
             formatted_small = f"[green]{formatted_small}/0.1L[/green]"
-        elif 200.0 < value <= 400.0:
+        elif 5000.0 < value <= 10000.0:
             formatted_small = f"[yellow]{formatted_small}/0.1L[/yellow]"
-        elif 400.0 < value <= 800.0:
+        elif 10000.0 < value <= 20000.0:
             formatted_small = f"[orange_red1]{formatted_small}/0.1L[/orange_red1]"
         else:
             formatted_small = f"[red]{formatted_small}/0.1L[/red]"
@@ -119,13 +119,13 @@ class SensorsDataFormat:
     def _medium(self, value: float) -> str:
         formatted_medium = round(value, 1)
 
-        if value <= 50.0:
+        if value <= 1000.0:
             formatted_medium = f"[dodger_blue1]{formatted_medium}/0.1L[/dodger_blue1]"
-        elif 50.0 < value <= 100.0:
+        elif 1000.0 < value <= 2000.0:
             formatted_medium = f"[green]{formatted_medium}/0.1L[/green]"
-        elif 100.0 < value <= 200.0:
+        elif 2000.0 < value <= 3000.0:
             formatted_medium = f"[yellow]{formatted_medium}/0.1L[/yellow]"
-        elif 200.0 < value <= 400.0:
+        elif 3000.0 < value <= 4000.0:
             formatted_medium = f"[orange_red1]{formatted_medium}/0.1L[/orange_red1]"
         else:
             formatted_medium = f"[red]{formatted_medium}/0.1L[/red]"
@@ -135,13 +135,13 @@ class SensorsDataFormat:
     def _oxide(self, value: float) -> str:
         formatted_oxide = round(value, 2)
 
-        if value <= 50.0:
+        if value <= 10.0:
             formatted_oxide = f"[dodger_blue1]{formatted_oxide}K0[/dodger_blue1]"
-        elif 50.0 < value <= 100.0:
+        elif 10.0 < value <= 25.0:
             formatted_oxide = f"[green]{formatted_oxide}K0[/green]"
-        elif 100.0 < value <= 200.0:
+        elif 25.0 < value <= 40.0:
             formatted_oxide = f"[yellow]{formatted_oxide}K0[/yellow]"
-        elif 200.0 < value <= 400.0:
+        elif 50.0 < value <= 100.0:
             formatted_oxide = f"[orange_red1]{formatted_oxide}K0[/orange_red1]"
         else:
             formatted_oxide = f"[red]{formatted_oxide}K0[/red]"

@@ -2,12 +2,14 @@ import netifaces
 from subprocess import PIPE, Popen
 
 from src.main_config import main_cnf
+from src.logger import Logger
 
 
 class Utilities:
+    def __init__(self):
+        self.logger = Logger()
 
-    @staticmethod
-    def get_ip_address(net_interfaces) -> str:
+    def get_ip_address(self, net_interfaces) -> str:
         result = ""
 
         for name in net_interfaces:
@@ -16,8 +18,10 @@ class Utilities:
                 interfaces = address[netifaces.AF_INET]
                 if interfaces:
                     result = interfaces[0]["addr"]
-            except Exception:
-                ...
+                    break
+            except Exception as e:
+                self.logger.error(e)
+
         return result
 
     @staticmethod

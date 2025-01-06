@@ -1,15 +1,17 @@
 from bme280 import BME280
 from smbus2 import SMBus
+from src.logger import Logger
 
 
 class EnviroSensor:
     def __init__(self):
+        self.logger = Logger()
         self.enviro = None
 
         try:
             self.enviro = BME280(i2c_dev=SMBus(1))
-        except Exception:
-            ...
+        except Exception as e:
+            self.logger.error(e)
 
     def _get_enviro(self) -> dict[str, int]:
         enviro_data = {
@@ -23,8 +25,8 @@ class EnviroSensor:
                 enviro_data["temperature"] = self.enviro.get_temperature()
                 enviro_data["pressure"] = self.enviro.get_pressure()
                 enviro_data["humidity"] = self.enviro.get_humidity()
-        except Exception:
-            ...
+        except Exception as e:
+            self.logger.error(e)
 
         return enviro_data
 

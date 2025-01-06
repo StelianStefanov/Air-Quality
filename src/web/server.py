@@ -15,8 +15,9 @@ from src.sensors.enviro_sensor import EnviroSensor
 from src.sensors.pms_sensor import PmsSensor
 from src.utilities import Utilities
 from src.web.sensor_colors import SensorColors
+from src.logger import Logger
 
-
+logger = Logger()
 app = FastAPI()
 
 STATIC_DIR = main_cnf.root_dir / "src/web/static"
@@ -34,8 +35,7 @@ def read_json() -> None:
             data = orjson.loads(f.read())
             return data
     except Exception as e:
-        # TODO: ADD LOG
-        print(e)
+        logger.error(e)
 
 
 def get_context():

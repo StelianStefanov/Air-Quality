@@ -12,6 +12,7 @@ from src.sensors.pms_sensor import PmsSensor
 from src.sensors.enviro_gas import EnviroGas
 from src.main_config import main_cnf
 from src.sensors.sensors_data_format import SensorsDataFormat
+from src.logger import Logger
 
 
 class Display(App):
@@ -20,11 +21,13 @@ class Display(App):
 
     def __init__(self):
         super().__init__()
+        self.logger = Logger()
+        self.utils = Utilities()
         self.enviro_sensor = EnviroSensor()
         self.pms_sensor = PmsSensor()
         self.enviro_gas_sensor = EnviroGas()
         self.data_formatter = SensorsDataFormat()
-        self.network_ip = str(Utilities.get_ip_address(main_cnf.get_net_interfaces))
+        self.network_ip = str(self.utils.get_ip_address(main_cnf.get_net_interfaces))
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""
@@ -78,8 +81,8 @@ class Display(App):
         try:
             with open("/dev/shm/sensors_memory", "wb") as f:
                 f.write(data_to_write)
-        except Exception:
-            ...
+        except Exception as e:
+            self.logger.error(e)
 
     def update(self) -> None:
         """Refreshes the data in the interval of 1 second."""

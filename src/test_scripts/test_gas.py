@@ -64,7 +64,7 @@ def setup():
     else:
         adc.set_sample_rate(1600)
 
-    _heater = gpiodevice.get_pin("GPIO24", "EnviroPlus", OUTH)
+    # _heater = gpiodevice.get_pin("GPIO24", "EnviroPlus", OUTH)
 
     atexit.register(cleanup)
 
@@ -105,17 +105,17 @@ def read_all():
     nh3 = adc.get_voltage("in2/gnd")
 
     try:
-        ox = (ox * 56000) / (3.3 - ox)
+        ox = ((ox * 56000) / (3.3 - ox)) / 1000
     except ZeroDivisionError:
         ox = 0
 
     try:
-        red = (red * 56000) / (3.3 - red)
+        red = ((red * 56000) / (3.3 - red)) / 1000
     except ZeroDivisionError:
         red = 0
 
     try:
-        nh3 = (nh3 * 56000) / (3.3 - nh3)
+        nh3 = ((nh3 * 56000) / (3.3 - nh3)) / 1000
     except ZeroDivisionError:
         nh3 = 0
 
@@ -159,4 +159,4 @@ def read_adc():
     return read_all().adc
 
 
-print(read_oxidising())
+print(read_nh3())

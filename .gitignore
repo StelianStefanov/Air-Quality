@@ -1,6 +1,6 @@
 .venv
-sensorcommunity.py
 __pycache__
 textual.log
 .env
-log.log
+logs/cli.log
+logs/web.log

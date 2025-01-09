@@ -9,15 +9,6 @@ class MainConfig:
         load_dotenv()
 
     @property
-    def get_net_interfaces(self) -> list[str]:
-        dotenv_intrfaces = os.getenv("NET_INTERFACES")
-
-        if not dotenv_intrfaces:
-            return ["eth0", "wlan0", "enp60s0"]
-
-        return os.getenv("NET_INTERFACES").split(",")
-
-    @property
     def get_screen_title(self) -> str:
         return os.getenv("TITLE_SCREEN", default="Air Quality")
 
@@ -47,6 +38,14 @@ class MainConfig:
     @property
     def web_interval_reload(self) -> int:
         return int(os.getenv("WEB_INTERVAL_RELOAD", default=2))
+
+    @property
+    def cli_log_path(self) -> Path:
+        return self.root_dir / "logs" / "cli.log"
+
+    @property
+    def web_log_path(self) -> Path:
+        return self.root_dir / "logs" / "web.log"
 
 
 main_cnf = MainConfig()

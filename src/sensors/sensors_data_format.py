@@ -52,7 +52,7 @@ class SensorsDataFormat:
         else:
             formatted_smoke = f"[red]{formatted_smoke}µg/m³[/red]"
 
-        return f"Smoke: {formatted_smoke}"
+        return f"Smoke: \n{formatted_smoke}"
 
     def _metals(self, value: int) -> str:
         formatted_metals = round(value, 1)
@@ -82,7 +82,7 @@ class SensorsDataFormat:
         else:
             formatted_dust = f"[red]{formatted_dust}µg/m³[/red]"
 
-        return f"Dust: {formatted_dust}"
+        return f"Dust: \n{formatted_dust}"
 
     def _mikro(self, value: float) -> str:
         formatted_mikro = round(value, 1)
@@ -98,7 +98,7 @@ class SensorsDataFormat:
         else:
             formatted_mikro = f"[red]{formatted_mikro}/0.1L[/red]"
 
-        return f"Mikro: {formatted_mikro}"
+        return f"Micro: {formatted_mikro}"
 
     def _small(self, value: float) -> str:
         formatted_small = round(value, 1)

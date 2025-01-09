@@ -71,21 +71,25 @@ Screen {
 }
 
 HeaderIcon {
-        width: 10
+        width: 10;
+        background: grey;
     }
 
 HeaderClockSpace {
   width: 10;
+  background: grey;
 }
 
 HeaderTitle {
         content-align: center middle;
         width: 100%;
+        background: grey;
     }
 
 Footer {
     layout: horizontal;
     #footer_right_static {
       text-align: right;
+      background: grey;
       }
 } 

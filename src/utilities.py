@@ -1,25 +1,32 @@
-import netifaces
+from netifaces import interfaces, ifaddresses, AF_INET
 from subprocess import PIPE, Popen
+import logging
+
 
 from src.main_config import main_cnf
 from src.logger import Logger
+
+logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.cli_log_path))
 
 
 class Utilities:
 
     @staticmethod
-    def get_ip_address(net_interfaces) -> str:
-        result = ""
+    def get_ip_address() -> str:
+        try:
+            result = ""
+            addresses = []
+            for ifaceName in interfaces():
+                add_info = ifaddresses(ifaceName).setdefault(AF_INET, [{"addr": ""}])
+                if add_info:
+                    ip_address = add_info[0].get("addr")
+                    if ip_address and ip_address != "127.0.0.1":
+                        addresses.append(ip_address)
+        except Exception as e:
+            logger.exception(e)
 
-        for name in net_interfaces:
-            try:
-                address = netifaces.ifaddresses(name)
-                interfaces = address[netifaces.AF_INET]
-                if interfaces:
-                    result = interfaces[0]["addr"]
-                    break
-            except Exception as e:
-                Logger().error(e)
+        if addresses:
+            result = addresses[0]
 
         return result
 
@@ -40,7 +47,7 @@ class Utilities:
 
                 return float(output[output.index("=") + 1 : output.rindex("'")])
             except FileNotFoundError as e:
-                Logger().error(e)
+                logger.exception(e)
                 return None
 
         if get_cpu_temperature() is not None:

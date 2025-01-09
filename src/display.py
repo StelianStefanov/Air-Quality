@@ -1,5 +1,6 @@
 import datetime
 import orjson
+import logging
 
 from textual.app import App, ComposeResult
 from textual.widgets import Static, Header
@@ -21,12 +22,11 @@ class Display(App):
 
     def __init__(self):
         super().__init__()
-        self.logger = Logger()
-        self.enviro_sensor = EnviroSensor()
-        self.pms_sensor = PmsSensor()
-        self.enviro_gas_sensor = EnviroGas()
+        self.logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.cli_log_path))
+        self.enviro_sensor = EnviroSensor(self.logger)
+        self.pms_sensor = PmsSensor(self.logger)
+        self.enviro_gas_sensor = EnviroGas(self.logger)
         self.data_formatter = SensorsDataFormat()
-        self.network_ip = str(Utilities.get_ip_address(main_cnf.get_net_interfaces))
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""
@@ -81,7 +81,7 @@ class Display(App):
             with open("/dev/shm/sensors_memory", "wb") as f:
                 f.write(data_to_write)
         except Exception as e:
-            self.logger.error(e)
+            self.logger.exception(e)
 
     def update(self) -> None:
         """Refreshes the data in the interval of 1 second."""
@@ -90,6 +90,7 @@ class Display(App):
         pms_data = self.pms_sensor.get_data()
         enviro_gas_data = self.enviro_gas_sensor.get_data()
         compensated_temp = Utilities.temperature_compensation(enviro_data["temperature"])
+        network_ip = str(Utilities.get_ip_address())
 
         self.query_one("#temp").update(self.data_formatter.do_format("temperature", compensated_temp))
         self.query_one("#press").update(self.data_formatter.do_format("pressure", enviro_data["pressure"]))
@@ -103,6 +104,6 @@ class Display(App):
         self.query_one("#oxide").update(self.data_formatter.do_format("oxide", enviro_gas_data["oxide"]))
         self.query_one("#reduce").update(self.data_formatter.do_format("reduce", enviro_gas_data["reduce"]))
         self.query_one("#nh3").update(self.data_formatter.do_format("nh3", enviro_gas_data["nh3"]))
-        self.query_one("#footer_right_static").update(self.network_ip)
-        if self.network_ip:
+        self.query_one("#footer_right_static").update(network_ip)
+        if network_ip:
             self.save_json(pms_data, enviro_data, enviro_gas_data)

@@ -4,14 +4,14 @@ from src.logger import Logger
 
 
 class EnviroSensor:
-    def __init__(self):
-        self.logger = Logger()
+    def __init__(self, main_logger: Logger):
         self.enviro = None
+        self.main_logger = main_logger
 
         try:
             self.enviro = BME280(i2c_dev=SMBus(1))
         except Exception as e:
-            self.logger.error(e)
+            self.main_logger.exception(e)
 
     def _get_enviro(self) -> dict[str, int]:
         enviro_data = {
@@ -26,7 +26,7 @@ class EnviroSensor:
                 enviro_data["pressure"] = self.enviro.get_pressure()
                 enviro_data["humidity"] = self.enviro.get_humidity()
         except Exception as e:
-            self.logger.error(e)
+            self.main_logger.exception(e)
 
         return enviro_data
 

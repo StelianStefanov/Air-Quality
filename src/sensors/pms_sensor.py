@@ -3,14 +3,14 @@ from src.logger import Logger
 
 
 class PmsSensor:
-    def __init__(self):
-        self.logger = Logger()
+    def __init__(self, main_logger: Logger):
+        self.main_logger = main_logger
         self.pms = None
 
         try:
             self.pms = PMS5003(device="/dev/ttyAMA0", baudrate=9600)
         except Exception as e:
-            self.logger.error(e)
+            self.main_logger.exception(e)
 
     def _get_pms(self) -> dict[str, int]:
         pms_data = {
@@ -34,7 +34,7 @@ class PmsSensor:
                 pms_data["small"] = sensor_data.pm_per_1l_air(0.5)
                 pms_data["medium"] = sensor_data.pm_per_1l_air(1.0)
         except Exception as e:
-            self.logger.error(e)
+            self.main_logger.exception(e)
 
         return pms_data
 

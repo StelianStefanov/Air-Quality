@@ -40,8 +40,8 @@ https://www.youtube.com/watch?v=M2Y9n6fhoxI
 **Update you Raspberry**
 
 ```bash
-  sudo apt update
-  sudo apt full-upgrade
+sudo apt update
+sudo apt full-upgrade
 ```
 
 **Hardware configuration**
@@ -49,31 +49,31 @@ https://www.youtube.com/watch?v=M2Y9n6fhoxI
 Open the config file:
 
 ```bash
-  sudo nano /boot/firmware/config.txt
+sudo nano /boot/firmware/config.txt
 ```
 
 Make sure these options are turned on:
 
 ```bash
-  dtparam=i2c_arm=on
-  dtparam=spi=on
-  display_auto_detect=1
+dtparam=i2c_arm=on
+dtparam=spi=on
+display_auto_detect=1
 ```
 
 In the bottom of the file write the following lines:
 
 ```bash
-  enable_uart=1
-  dtparam=spi=on
-  dtoverlay=waveshare35a
-  hdmi_force_hotplug=1
-  max_usb_current=1
-  hdmi_group=2
-  hdmi_mode=87
-  hdmi_cvt 640 480 60 6 0 0 0
-  hdmi_drive=2
-  display_rotate=2
-  dtoverlay=pi3-miniuart-bt
+enable_uart=1
+dtparam=spi=on
+dtoverlay=waveshare35a
+hdmi_force_hotplug=1
+max_usb_current=1
+hdmi_group=2
+hdmi_mode=87
+hdmi_cvt 640 480 60 6 0 0 0
+hdmi_drive=2
+display_rotate=2
+dtoverlay=pi3-miniuart-bt
 ```
 
 ## Installation
@@ -85,20 +85,20 @@ If you do not have git installed:
 **Ubuntu/Debian**
 
 ```bash
-  sudo apt update
-  sudo apt install git
+sudo apt update
+sudo apt install git
 ```
 
 **Fedora**
 
 ```bash
-  sudo dnf install git
+sudo dnf install git
 ```
 
 **Arch Linux/Manjaro**
 
 ```bash
-  sudo pacman -S git
+sudo pacman -S git
 ```
 
 **MacOS**
@@ -113,7 +113,7 @@ Install Homebrew if not already installed:
 Install git:
 
 ```bash
-  brew install git
+brew install git
 ```
 
 **Windows**
@@ -125,7 +125,7 @@ https://git-scm.com/download/win
 Copy the command from the green **code** button.
 
 ```bash
-  git clone git@github.com:username/Air-Quality.git
+git clone git@github.com:username/Air-Quality.git
 ```
 
 **Make a virtual environment**
@@ -133,7 +133,7 @@ Copy the command from the green **code** button.
 Install virtualenv if not already installed:
 
 ```bash
-  pip install virtualenv
+pip install virtualenv
 ```
 
 **Linux/MacOS**
@@ -141,13 +141,13 @@ Install virtualenv if not already installed:
 Go to the folder:
 
 ```bash
-  cd Air-Quality/
+cd Air-Quality/
 ```
 
 Create the virtualenv:
 
 ```bash
-  python3 -m venv .venv
+python3 -m venv .venv
 ```
 
 replace the .venv with your desired name for the environment
@@ -155,7 +155,7 @@ replace the .venv with your desired name for the environment
 Activate the virtual environment:
 
 ```bash
-  source .venv/bin/activate
+source .venv/bin/activate
 ```
 
 **Windows**
@@ -163,13 +163,13 @@ Activate the virtual environment:
 Go to the folder:
 
 ```bash
-  cd Air-Quality/
+cd Air-Quality/
 ```
 
 Create the virtualenv:
 
 ```bash
-  python -m venv .venv
+python -m venv .venv
 ```
 
 replace the .venv with your desired name for the environment
@@ -177,19 +177,19 @@ replace the .venv with your desired name for the environment
 Activate the virtual environment:
 
 ```bash
-  venv\Scripts\activate
+venv\Scripts\activate
 ```
 
 **Generate requirements.txt**
 
 ```bash
-  pip freeze > requirements.txt
+pip freeze > requirements.txt
 ```
 
 **Install dependancies**
 
 ```bash
-  pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Run
@@ -197,7 +197,7 @@ Activate the virtual environment:
 If you did everything correct so far, and you have enabled you virtualenv, everything is ready to run the main command in your project.
 
 ```bash
-  python3 main.py
+python3 main.py
 ```
 
 ## Further Instructions
@@ -217,13 +217,13 @@ If lets say you want to check your sensor reading remotly in the project there i
 - To start the web-server type the following command:
 
 ```bash
-  make web-start
+make web-start
 ```
 
 - Then you can either type in the browser:
 
 ```bash
-  http://0.0.0.0:8000
+http://0.0.0.0:8000
 ```
 
 or type the **IP Address** shown in the bottom right of your screen adding at the end the port **:8000**
@@ -233,7 +233,7 @@ or type the **IP Address** shown in the bottom right of your screen adding at th
 If you want to use the sensor-data excluded from everything else you can go to:
 
 ```bash
-  http://0.0.0.0:8000/api/air-data
+http://0.0.0.0:8000/api/air-data
 ```
 
 There you can see a json formatted data of all the data that the sensors are returning.

@@ -104,6 +104,7 @@ def home_page(request: Request):
 @app.get("/dev", response_class=HTMLResponse)
 def page_dev(request: Request):
     """Dev page view"""
+    logger.info("Dev page")
     context = {}
     return templates.TemplateResponse(
         request=request,

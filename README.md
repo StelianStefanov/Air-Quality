@@ -228,6 +228,8 @@ http://0.0.0.0:8000
 
 or type the **IP Address** shown in the bottom right of your screen adding at the end the port **:8000**
 
+[![web-sensors.png](https://i.postimg.cc/9fLj34Sd/web-sensors.png)](https://postimg.cc/DW4NLz70)
+
 ## API
 
 If you want to use the sensor-data excluded from everything else you can go to:

@@ -37,7 +37,7 @@ Skip if not having the same display!
 **Enviro sensors assemblation video**:
 https://www.youtube.com/watch?v=M2Y9n6fhoxI
 
-**Update you Raspberry**
+**Update your Raspberry**
 
 ```bash
 sudo apt update
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 
 ## Run
 
-If you did everything correct so far, and you have enabled you virtualenv, everything is ready to run the main command in your project.
+If you did everything correct so far, and you have enabled your virtualenv, everything is ready to run the main command in your project.
 
 ```bash
 python3 main.py
@@ -206,7 +206,7 @@ If everything works as expected you should see on your screen a cli interfaces s
 
 - Date Title Clock on the top of the screen.
 - 3 columns with 4 rows showing sensor data. (Keep in mind if you did not attach you sensors properly or did not install the dependancies from the requirements.txt file the sensors will show 0)
-- In the bottom right of you screen there is the IP address of your raspberry
+- In the bottom right of your screen there is the IP address of your raspberry
 
 [![sensors.png](https://i.postimg.cc/MpRT8Yby/sensors.png)](https://postimg.cc/JsrmNZFn)
 

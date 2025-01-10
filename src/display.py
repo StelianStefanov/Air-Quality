@@ -20,13 +20,14 @@ class Display(App):
     ENABLE_COMMAND_PALETTE = False
     CSS_PATH = "display.tcss"
 
-    def __init__(self):
+    def __init__(self, logger: Logger):
         super().__init__()
-        self.logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.cli_log_path))
+        self.logger = logger
         self.enviro_sensor = EnviroSensor(self.logger)
         self.pms_sensor = PmsSensor(self.logger)
         self.enviro_gas_sensor = EnviroGas(self.logger)
         self.data_formatter = SensorsDataFormat()
+        self.logger.info("Display initialized")
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""

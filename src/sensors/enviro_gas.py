@@ -25,28 +25,15 @@ class GasDataContainer:
 class EnviroGas:
     def __init__(self, main_logger: Logger):
         self.main_logger = main_logger
-        self._is_setup = False
         self._is_available = False
         self._adc_enabled = False
         self._adc_gain = MICS6814_GAIN
         self._heater = None
         self.adc = None
         self.adc_type = None
-
-    # class Mics6814Reading:
-    #     __slots__ = "oxidising", "reducing", "nh3", "adc"
-
-    #     def __init__(self, ox, red, nh3, adc=None):
-    #         self.oxidising = ox
-    #         self.reducing = red
-    #         self.nh3 = nh3
-    #         self.adc = adc
+        self._setup()
 
     def _setup(self):
-        if self._is_setup:
-            return
-        self._is_setup = True
-
         try:
             self.adc = ads1015.ADS1015(i2c_addr=0x49)
             self.adc_type = self.adc.detect_chip_type()
@@ -64,8 +51,31 @@ class EnviroGas:
 
         atexit.register(self._cleanup)
 
+    # def _setup(self):
+    #     if self._is_setup:
+    #         return
+    #     self._is_setup = True
+    #     self.main_logger.info("Setting up gas sensor...")
+
+    #     try:
+    #         self.adc = ads1015.ADS1015(i2c_addr=0x49)
+    #         self.adc_type = self.adc.detect_chip_type()
+    #         self._is_available = True
+    #     except IOError:
+    #         self._is_available = False
+    #         return
+
+    #     self.adc.set_mode("single")
+    #     self.adc.set_programmable_gain(MICS6814_GAIN)
+    #     if self.adc_type == "ADS1115":
+    #         self.adc.set_sample_rate(128)
+    #     else:
+    #         self.adc.set_sample_rate(1600)
+
+    #     atexit.register(self._cleanup)
+
     def _available(self):
-        self._setup()
+
         return self._is_available
 
     def _enable_adc(self, value=True):
@@ -84,7 +94,6 @@ class EnviroGas:
 
     def _read_all(self) -> GasDataContainer:
         """Return gas resistance for oxidising, reducing and NH3"""
-        self._setup()
 
         if not self._is_available:
             raise RuntimeError("Gas sensor not connected.")

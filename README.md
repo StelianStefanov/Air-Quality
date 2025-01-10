@@ -208,7 +208,7 @@ If everything works as expected you should see on your screen a cli interfaces s
 - 3 columns with 4 rows showing sensor data. (Keep in mind if you did not attach you sensors properly or did not install the dependancies from the requirements.txt file the sensors will show 0)
 - In the bottom right of you screen there is the IP address of your raspberry
 
-![UI screenshot](https://imgur.com/a/dmgxRPg)
+[![sensors.png](https://i.postimg.cc/MpRT8Yby/sensors.png)](https://postimg.cc/JsrmNZFn)
 
 **Initiating a web server**
 

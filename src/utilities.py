@@ -20,7 +20,6 @@ class Utilities:
                     ip_address = add_info[0].get("addr")
                     if ip_address and ip_address != "127.0.0.1":
                         addresses.append(ip_address)
-                        Utilities.logger.info(ip_address)
         except Exception as e:
             Utilities.logger.exception(e)
 

@@ -27,7 +27,6 @@ class Display(App):
         self.pms_sensor = PmsSensor(self.logger)
         self.enviro_gas_sensor = EnviroGas(self.logger)
         self.data_formatter = SensorsDataFormat()
-        self.logger.info("Display initialized")
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""

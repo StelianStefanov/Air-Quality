@@ -196,9 +196,47 @@ pip install -r requirements.txt
 
 If you did everything correct so far, and you have enabled your virtualenv, everything is ready to run the main command in your project.
 
+You could just run it by executing the python main file.
+
 ```bash
 python3 main.py
 ```
+
+If you want the sensors to start automatically with the raspberry use the autostart folder.
+
+```bash
+cd .config/autostart
+```
+
+```bash
+sudo nano air.desktop
+```
+
+```bash
+sudo nano airweb.desktop
+```
+
+In the air.desktop file paste the following lines.
+
+```bash
+[Desktop Entry]
+Type=Application
+Name=Air
+Exec=/PATH_TO_YOUR_PROJECT/air_quality/autostart/start_air_desktop.sh
+```
+
+**Check the .sh files in the autostart folder and raplace the project path and the .venv name with yours, otherwise it will not work!!!**
+
+If you want to the web page to start automatically too open the airweb.desktop file and paste the following lines:
+
+```bash
+[Desktop Entry]
+Type=Application
+Name=Air-Web
+Exec=/PATH_TO_YOUR_PROJECT/air_quality/autostart/start_air_web.sh
+```
+
+**Check the .sh files in the autostart folder and raplace the project path and the .venv name with yours, otherwise it will not work!!!**
 
 ## Further Instructions
 

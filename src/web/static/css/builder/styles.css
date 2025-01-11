@@ -15,7 +15,7 @@
     @apply m-auto text-center text-3xl text-white gap-2;
 }
 
-#smoke, #metals, #dust {
+#smoke, #metals, #dust, #reduce {
     @apply flex justify-center;
 }
 

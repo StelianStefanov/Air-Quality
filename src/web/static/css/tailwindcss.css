@@ -39,7 +39,7 @@
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-#smoke, #metals, #dust {
+#smoke, #metals, #dust, #reduce {
   display: flex;
   justify-content: center;
 }

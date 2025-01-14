@@ -182,3 +182,15 @@ class SensorColors:
             nh3_color = "text-red-600"
 
         return nh3_color
+
+    @staticmethod
+    def overall_title_color(value: float) -> str:
+
+        if value == " Good":
+            average_color = "text-green-600"
+        elif value == " Normal":
+            average_color = "text-yellow-400"
+        elif value == " Bad":
+            average_color = "text-red-600"
+
+        return average_color

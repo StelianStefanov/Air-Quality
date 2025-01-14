@@ -46,6 +46,7 @@ def get_context():
     """View Context"""
     data = read_json()
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
+    overall_quality = Utilities.get_overall_quality()
     date = datetime.now().strftime("%x")
     clock = datetime.now().strftime("%H:%M")
     assets_version = main_cnf.assets_version
@@ -68,7 +69,8 @@ def get_context():
             "clock": clock,
         },
         "sensor_properties": {
-            "page_title": "Air Quality",
+            "page_title": f"Air Quality:",
+            "overall_quality": overall_quality,
             "temp_color": SensorColors.temperature(compensated_temp),
             "pressure_color": SensorColors.pressure(data["pressure"]),
             "humidity_color": SensorColors.humidity(data["humidity"]),
@@ -81,6 +83,7 @@ def get_context():
             "mikro_color": SensorColors.mikro(data["mikro"]),
             "small_color": SensorColors.small(data["small"]),
             "medium_color": SensorColors.medium(data["medium"]),
+            "overall_title_color": SensorColors.overall_title_color(overall_quality),
             "assets_version": assets_version,
             "reload_interval": main_cnf.web_interval_reload,
         },

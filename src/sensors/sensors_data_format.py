@@ -180,6 +180,18 @@ class SensorsDataFormat:
 
         return f"Amonia: {formatted_nh3}"
 
+    def _overall_quaility(self, value: str) -> str:
+        formatted_overall_quality = ""
+
+        if value == " Good":
+            formatted_overall_quality = f"[green]{value}[/green]"
+        elif value == " Normal":
+            formatted_overall_quality = f"[yellow]{value}[/yellow]"
+        elif value == " Bad":
+            formatted_overall_quality = f"[red]{value}[/red]"
+
+        return f"Air Quality:{formatted_overall_quality}"
+
     def do_format(self, type_: str, value: int | float) -> str:
         data_format_method = getattr(self, f"_{type_}")
 

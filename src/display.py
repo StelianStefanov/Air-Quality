@@ -90,6 +90,7 @@ class Display(App):
         pms_data = self.pms_sensor.get_data()
         enviro_gas_data = self.enviro_gas_sensor.get_data()
         compensated_temp = Utilities.temperature_compensation(enviro_data["temperature"])
+        overall_quality = Utilities.get_overall_quality()
         network_ip = str(Utilities.get_ip_address())
 
         self.query_one("#temp").update(self.data_formatter.do_format("temperature", compensated_temp))
@@ -104,6 +105,8 @@ class Display(App):
         self.query_one("#oxide").update(self.data_formatter.do_format("oxide", enviro_gas_data["oxide"]))
         self.query_one("#reduce").update(self.data_formatter.do_format("reduce", enviro_gas_data["reduce"]))
         self.query_one("#nh3").update(self.data_formatter.do_format("nh3", enviro_gas_data["nh3"]))
-        self.query_one("#footer_right_static").update(network_ip)
+        self.query_one("#footer_right_static").update(
+            f"{self.data_formatter.do_format('overall_quaility', overall_quality)}               {network_ip}"
+        )
         if network_ip:
             self.save_json(pms_data, enviro_data, enviro_gas_data)

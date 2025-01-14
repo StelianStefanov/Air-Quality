@@ -19,7 +19,6 @@ Utilities.logger = main_logger
 def main():
     try:
         Display(main_logger).run()
-        main_logger.info("Air started")
     except Exception as e:
         main_logger.exception(e)
 

@@ -14,6 +14,14 @@ class EnviroSensor:
             self.main_logger.exception(e)
 
     def _get_enviro(self) -> dict[str, int]:
+        """
+        Retrieves environmental data from the BME280 sensor.
+
+        Returns:
+            dict[str, int]: A dictionary containing the temperature, pressure,
+                            and humidity readings.
+        """
+
         enviro_data = {
             "temperature": 0,
             "pressure": 0,

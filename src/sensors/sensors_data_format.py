@@ -1,4 +1,6 @@
 class SensorsDataFormat:
+    """It formats the data depending on its value and colorizes the data.
+    Also, it returns the data as a formatted string."""
 
     def _temperature(self, value: float) -> str:
         formatted_temperature = round(value, 2)

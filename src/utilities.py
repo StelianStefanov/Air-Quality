@@ -1,7 +1,8 @@
 from netifaces import interfaces, ifaddresses, AF_INET
 from subprocess import PIPE, Popen
-import orjson
+import json
 import logging
+import time
 
 from src.main_config import main_cnf
 from src.logger import Logger
@@ -12,6 +13,8 @@ class Utilities:
 
     @staticmethod
     def get_ip_address() -> str:
+        """Gets the current ip address of the device"""
+
         try:
             result = ""
             addresses = []
@@ -62,21 +65,24 @@ class Utilities:
             return raw_temperature
 
     @staticmethod
+    def read_sensor_shared_data(logger: logging.Logger) -> dict:
+        while True:
+            try:
+                with open("/dev/shm/sensors_memory", "r") as f:
+                    data = json.load(f)
+                    return data
+            except Exception as e:
+                logger.exception(e)
+                time.sleep(0.5)
+
+    @staticmethod
     def get_overall_quality() -> str:
         """Get overall air quality with proper error handling"""
 
         GREEN_RANGE_THRESHOLD = 1028  # 12342 - number without deviding by 12
         YELLOW_RANGE_THRESHOLD = 3483  # 41805 - number without deviding by 12
 
-        def read_json() -> None:
-            try:
-                with open("/dev/shm/sensors_memory", "r") as f:
-                    data = orjson.loads(f.read())
-                    return data
-            except Exception as e:
-                Utilities.logger.exception(e)
-
-        data = read_json()
+        data = Utilities.read_sensor_shared_data(Utilities.logger)
         total_quality = ""
         try:
             total_quality = (

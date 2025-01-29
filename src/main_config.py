@@ -24,6 +24,8 @@ class MainConfig:
 
     @property
     def compensation_temp_factor(self) -> float:
+        """There is a temperature compensation, because of the raspberry and the sensor are heating up at the same time"""
+
         compensation_factor = os.getenv("COMPENSATION_TEMP_FACTOR")
         default_factor = 4.35
 

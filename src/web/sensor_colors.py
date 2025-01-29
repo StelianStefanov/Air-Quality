@@ -1,4 +1,5 @@
 class SensorColors:
+    """Formatting colors depending on their temperature"""
 
     @staticmethod
     def temperature(value: float) -> str:

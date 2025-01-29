@@ -3,7 +3,7 @@
 import json
 import orjson
 import logging
-
+import time
 
 from datetime import datetime
 from fastapi import FastAPI, Request, Response
@@ -15,8 +15,6 @@ from fastapi.encoders import jsonable_encoder
 
 
 from src.main_config import main_cnf
-from src.sensors.enviro_sensor import EnviroSensor
-from src.sensors.pms_sensor import PmsSensor
 from src.utilities import Utilities
 from src.web.sensor_colors import SensorColors
 from src.logger import Logger
@@ -33,18 +31,9 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
-def read_json() -> None:
-    try:
-        with open("/dev/shm/sensors_memory", "r") as f:
-            data = orjson.loads(f.read())
-            return data
-    except Exception as e:
-        logger.exception(e)
-
-
 def get_context():
     """View Context"""
-    data = read_json()
+    data = Utilities.read_sensor_shared_data(logger)
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
     overall_quality = Utilities.get_overall_quality()
     date = datetime.now().strftime("%x")
@@ -69,7 +58,7 @@ def get_context():
             "clock": clock,
         },
         "sensor_properties": {
-            "page_title": f"Air Quality:",
+            "page_title": f"Air Quality",
             "overall_quality": overall_quality,
             "temp_color": SensorColors.temperature(compensated_temp),
             "pressure_color": SensorColors.pressure(data["pressure"]),

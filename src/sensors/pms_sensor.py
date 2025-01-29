@@ -13,6 +13,14 @@ class PmsSensor:
             self.main_logger.exception(e)
 
     def _get_pms(self) -> dict[str, int]:
+        """
+        Retrieves particulate matter data from the PMS5003 sensor.
+
+        Returns:
+            dict[str, int]: A dictionary containing the particulate matter data
+            with keys "smoke", "metals", "dust", "mikro", "small", and "medium".
+        """
+
         pms_data = {
             "smoke": 0,
             "metals": 0,

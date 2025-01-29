@@ -1,6 +1,4 @@
 import datetime
-import orjson
-import logging
 import json
 
 from textual.app import App, ComposeResult

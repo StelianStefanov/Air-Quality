@@ -1,9 +1,7 @@
 """FastApi views"""
 
-import json
-import orjson
 import logging
-import time
+
 
 from datetime import datetime
 from fastapi import FastAPI, Request, Response
@@ -32,7 +30,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
 def get_context():
-    """View Context"""
+    """View Context Test"""
     data = Utilities.read_sensor_shared_data(logger)
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
     overall_quality = Utilities.get_overall_quality()

@@ -6,3 +6,4 @@ textual==1.0.0
 textual-dev==1.7.0
 python-dotenv==1.0.1
 fastapi[standard]==0.115.7
+redis==5.2.1

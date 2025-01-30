@@ -13,6 +13,7 @@ from src.sensors.enviro_gas import EnviroGas
 from src.main_config import main_cnf
 from src.sensors.sensors_data_format import SensorsDataFormat
 from src.logger import Logger
+from src.redis_database import RedisDatabase
 
 
 class Display(App):
@@ -26,6 +27,7 @@ class Display(App):
         self.pms_sensor = PmsSensor(self.logger)
         self.enviro_gas_sensor = EnviroGas(self.logger)
         self.data_formatter = SensorsDataFormat()
+        self.redis_db = RedisDatabase(logger)
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""
@@ -55,44 +57,6 @@ class Display(App):
         self.update()
         self.set_interval(2, self.update)
 
-    def save_json(self, pms_data: dict, enviro_data: dict, enviro_gas_data: dict) -> None:
-        """
-        Saves sensor data to a shared memory file as a JSON byte stream.
-
-        It saves the json into a shared file in the memory of the linux system.
-
-        Args:
-            pms_data (dict): Data collected from the PMS sensor.
-            enviro_data (dict): Data collected from the Enviro sensor.
-            enviro_gas_data (dict): Data collected from the EnviroGas sensor.
-        """
-
-        default_data = {
-            "temperature": 0,
-            "pressure": 0,
-            "humidity": 0,
-            "smoke": 0,
-            "metals": 0,
-            "dust": 0,
-            "oxide": 0,
-            "reduce": 0,
-            "nh3": 0,
-            "mikro": 0,
-            "small": 0,
-            "medium": 0,
-        }
-
-        try:
-            data_to_write = json.dumps({**enviro_data, **pms_data, **enviro_gas_data})
-        except Exception as e:
-            data_to_write = json.dumps(default_data)
-
-        try:
-            with open("/dev/shm/sensors_memory", "w") as f:
-                f.write(data_to_write)
-        except Exception as e:
-            self.logger.exception(e)
-
     def update(self) -> None:
         """Refreshes the data in the interval of 1 second."""
 
@@ -100,8 +64,8 @@ class Display(App):
         pms_data = self.pms_sensor.get_data()
         enviro_gas_data = self.enviro_gas_sensor.get_data()
         compensated_temp = Utilities.temperature_compensation(enviro_data["temperature"])
-        overall_quality = Utilities.get_overall_quality()
         network_ip = str(Utilities.get_ip_address())
+        overall_quality = Utilities.get_overall_quality(compensated_temp, enviro_data, pms_data, enviro_gas_data)
 
         self.query_one("#temp").update(self.data_formatter.do_format("temperature", compensated_temp))
         self.query_one("#press").update(self.data_formatter.do_format("pressure", enviro_data["pressure"]))
@@ -115,6 +79,7 @@ class Display(App):
         self.query_one("#oxide").update(self.data_formatter.do_format("oxide", enviro_gas_data["oxide"]))
         self.query_one("#reduce").update(self.data_formatter.do_format("reduce", enviro_gas_data["reduce"]))
         self.query_one("#nh3").update(self.data_formatter.do_format("nh3", enviro_gas_data["nh3"]))
+
         if overall_quality == " Normal":
             self.query_one(
                 "#footer_right_static"
@@ -127,5 +92,8 @@ class Display(App):
             ).update(  # The network ip is thrown into the abyss, because that the terminal display library manages the position of text....
                 f"{self.data_formatter.do_format('overall_quaility', overall_quality)}                                                                                              {network_ip}"
             )
+
         if network_ip:
-            self.save_json(pms_data, enviro_data, enviro_gas_data)
+            self.redis_db.save_sensor_data(
+                "sensor_data", {**enviro_data, **pms_data, **enviro_gas_data, "quality": overall_quality}
+            )

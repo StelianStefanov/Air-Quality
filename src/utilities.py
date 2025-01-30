@@ -76,28 +76,27 @@ class Utilities:
                 time.sleep(0.5)
 
     @staticmethod
-    def get_overall_quality() -> str:
+    def get_overall_quality(temperature: float, enviro_data: dict, pms_data: dict, enviro_gas_data: dict) -> str:
         """Get overall air quality with proper error handling"""
 
         GREEN_RANGE_THRESHOLD = 1028  # 12342 - number without deviding by 12
         YELLOW_RANGE_THRESHOLD = 3483  # 41805 - number without deviding by 12
 
-        data = Utilities.read_sensor_shared_data(Utilities.logger)
         total_quality = ""
         try:
             total_quality = (
-                data["temperature"]
-                + data["pressure"]
-                + data["humidity"]
-                + data["smoke"]
-                + data["metals"]
-                + data["dust"]
-                + data["mikro"]
-                + data["small"]
-                + data["medium"]
-                + data["oxide"]
-                + data["reduce"]
-                + data["nh3"]
+                temperature
+                + enviro_data["pressure"]
+                + enviro_data["humidity"]
+                + pms_data["smoke"]
+                + pms_data["metals"]
+                + pms_data["dust"]
+                + pms_data["mikro"]
+                + pms_data["small"]
+                + pms_data["medium"]
+                + enviro_gas_data["oxide"]
+                + enviro_gas_data["reduce"]
+                + enviro_gas_data["nh3"]
             )
             total_quality /= 12
 

@@ -16,6 +16,7 @@ from src.main_config import main_cnf
 from src.utilities import Utilities
 from src.web.sensor_colors import SensorColors
 from src.logger import Logger
+from src.redis_database import RedisDatabase
 
 logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.web_log_path))
 app = FastAPI()
@@ -23,6 +24,7 @@ app = FastAPI()
 STATIC_DIR = main_cnf.root_dir / "src/web/static"
 TEMPLATES_DIR = main_cnf.root_dir / "src/web/templates"
 
+redis_db = RedisDatabase(logger)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
@@ -31,9 +33,8 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 def get_context():
     """View Context Test"""
-    data = Utilities.read_sensor_shared_data(logger)
+    data = redis_db.get_sensor_data("sensor_data")
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
-    overall_quality = Utilities.get_overall_quality()
     date = datetime.now().strftime("%x")
     clock = datetime.now().strftime("%H:%M")
     assets_version = main_cnf.assets_version
@@ -57,7 +58,7 @@ def get_context():
         },
         "sensor_properties": {
             "page_title": f"Air Quality",
-            "overall_quality": overall_quality,
+            "overall_quality": data["quality"],
             "temp_color": SensorColors.temperature(compensated_temp),
             "pressure_color": SensorColors.pressure(data["pressure"]),
             "humidity_color": SensorColors.humidity(data["humidity"]),
@@ -70,7 +71,7 @@ def get_context():
             "mikro_color": SensorColors.mikro(data["mikro"]),
             "small_color": SensorColors.small(data["small"]),
             "medium_color": SensorColors.medium(data["medium"]),
-            "overall_title_color": SensorColors.overall_title_color(overall_quality),
+            "overall_title_color": SensorColors.overall_title_color(data["quality"]),
             "assets_version": assets_version,
             "reload_interval": main_cnf.web_interval_reload,
         },

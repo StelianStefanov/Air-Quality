@@ -84,13 +84,17 @@ class Display(App):
             self.query_one(
                 "#footer_right_static"
             ).update(  # The network ip is thrown into the abyss, because that the terminal display library manages the position of text....
-                f"{self.data_formatter.do_format('overall_quaility', overall_quality)}                                                                                            {network_ip}"
+                f"{self.data_formatter.do_format('overall_quaility', overall_quality)}                            {network_ip}"
             )  # If the quality is normal, the ip is a bit to the left, beacause the word 'Normal' is longer...
+        elif overall_quality == " Bad":
+            self.query_one("#footer_right_static").update(
+                f"{self.data_formatter.do_format('overall_quaility', overall_quality)}                               {network_ip}"
+            )
         else:
             self.query_one(
                 "#footer_right_static"
             ).update(  # The network ip is thrown into the abyss, because that the terminal display library manages the position of text....
-                f"{self.data_formatter.do_format('overall_quaility', overall_quality)}                                                                                              {network_ip}"
+                f"{self.data_formatter.do_format('overall_quaility', overall_quality)}                              {network_ip}"
             )
 
         if network_ip:

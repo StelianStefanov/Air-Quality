@@ -1,6 +1,7 @@
 Screen {
     layout: grid;
     grid-size: 3;
+    background: black;
 }
 
 .box {
@@ -72,24 +73,24 @@ Screen {
 
 HeaderIcon {
         width: 10;
-        background: grey;
+        background: rgb(51, 51, 51);
     }
 
 HeaderClockSpace {
   width: 10;
-  background: grey;
+  background: rgb(51, 51, 51);
 }
 
 HeaderTitle {
         content-align: center middle;
         width: 100%;
-        background: grey;
+        background: rgb(51, 51, 51);
     }
 
 Footer {
     layout: horizontal;
     #footer_right_static {
       text-align: right;
-      background: grey;
+      background: rgb(51, 51, 51);
       }
 } 

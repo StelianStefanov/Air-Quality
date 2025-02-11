@@ -1,5 +1,4 @@
 import datetime
-import json
 
 from textual.app import App, ComposeResult
 from textual.widgets import Static, Header
@@ -55,7 +54,7 @@ class Display(App):
     def on_ready(self) -> None:
         """Calls the update function and sets the interval"""
         self.update()
-        self.set_interval(2, self.update)
+        self.set_interval(1, self.update)
 
     def update(self) -> None:
         """Refreshes the data in the interval of 1 second."""

@@ -7,9 +7,9 @@ class SensorsDataFormat:
         if value <= 15.0:
             formatted_temperature = f"[dodger_blue1]{formatted_temperature}°C[/dodger_blue1]"
         elif 15.0 < value <= 25.0:
-            formatted_temperature = f"[green]{formatted_temperature}°C[/green]"
+            formatted_temperature = f"[green3]{formatted_temperature}°C[/green3]"
         elif 25.0 < value <= 30.0:
-            formatted_temperature = f"[yellow]{formatted_temperature}°C[/yellow]"
+            formatted_temperature = f"[yellow3]{formatted_temperature}°C[/yellow3]"
         else:
             formatted_temperature = f"[red]{formatted_temperature}°C[/red]"
 
@@ -20,9 +20,9 @@ class SensorsDataFormat:
         if value <= 950.0:
             formatted_pressure = f"[dodger_blue1]{formatted_pressure}HPa[/dodger_blue1]"
         elif 950.0 < value <= 1000.0:
-            formatted_pressure = f"[green]{formatted_pressure}HPa[/green]"
+            formatted_pressure = f"[green3]{formatted_pressure}HPa[/green3]"
         elif 1050.0 < value <= 1100.0:
-            formatted_pressure = f"[yellow]{formatted_pressure}HPa[/yellow]"
+            formatted_pressure = f"[yellow3]{formatted_pressure}HPa[/yellow3]"
         else:
             formatted_pressure = f"[red]{formatted_pressure}HPa[/red]"
 
@@ -33,9 +33,9 @@ class SensorsDataFormat:
         if value <= 20.0:
             formatted_humidity = f"[dodger_blue1]{formatted_humidity}%[/dodger_blue1]"
         elif 20.0 < value <= 40.0:
-            formatted_humidity = f"[green]{formatted_humidity}%[/green]"
+            formatted_humidity = f"[green3]{formatted_humidity}%[/green3]"
         elif 40.0 < value <= 60.0:
-            formatted_humidity = f"[yellow]{formatted_humidity}%[/yellow]"
+            formatted_humidity = f"[yellow3]{formatted_humidity}%[/yellow3]"
         else:
             formatted_humidity = f"[red]{formatted_humidity}%[/red]"
 
@@ -46,9 +46,9 @@ class SensorsDataFormat:
         if value <= 15.0:
             formatted_smoke = f"[dodger_blue1]{formatted_smoke}µg/m³[/dodger_blue1]"
         elif 15.0 < value <= 30.0:
-            formatted_smoke = f"[green]{formatted_smoke}µg/m³[/green]"
+            formatted_smoke = f"[green3]{formatted_smoke}µg/m³[/green3]"
         elif 30.0 < value <= 100.0:
-            formatted_smoke = f"[yellow]{formatted_smoke}µg/m³[/yellow]"
+            formatted_smoke = f"[yellow3]{formatted_smoke}µg/m³[/yellow3]"
         elif 100.0 < value <= 300.0:
             formatted_smoke = f"[orange_red1]{formatted_smoke}µg/m³[/orange_red1]"
         else:
@@ -61,9 +61,9 @@ class SensorsDataFormat:
         if value <= 12.0:
             formatted_metals = f"[dodger_blue1]{formatted_metals}µg/m³[/dodger_blue1]"
         elif 12.0 < value <= 35.0:
-            formatted_metals = f"[green]{formatted_metals}µg/m³[/green]"
+            formatted_metals = f"[green3]{formatted_metals}µg/m³[/green3]"
         elif 35.0 < value <= 60.0:
-            formatted_metals = f"[yellow]{formatted_metals}µg/m³[/yellow]"
+            formatted_metals = f"[yellow3]{formatted_metals}µg/m³[/yellow3]"
         elif 60.0 < value <= 100.0:
             formatted_metals = f"[orange_red1]{formatted_metals}µg/m³[/orange_red1]"
         else:
@@ -76,9 +76,9 @@ class SensorsDataFormat:
         if value <= 54.0:
             formatted_dust = f"[dodger_blue1]{formatted_dust}µg/m³[/dodger_blue1]"
         elif 54.0 < value <= 155.0:
-            formatted_dust = f"[green]{formatted_dust}µg/m³[/green]"
+            formatted_dust = f"[green3]{formatted_dust}µg/m³[/green3]"
         elif 155.0 < value <= 255.0:
-            formatted_dust = f"[yellow]{formatted_dust}µg/m³[/yellow]"
+            formatted_dust = f"[yellow3]{formatted_dust}µg/m³[/yellow3]"
         elif 255.0 < value <= 354.0:
             formatted_dust = f"[orange_red1]{formatted_dust}µg/m³[/orange_red1]"
         else:
@@ -92,9 +92,9 @@ class SensorsDataFormat:
         if value <= 2000.0:
             formatted_mikro = f"[dodger_blue1]{formatted_mikro}/0.1L[/dodger_blue1]"
         elif 2000.0 < value <= 10000.0:
-            formatted_mikro = f"[green]{formatted_mikro}/0.1L[/green]"
+            formatted_mikro = f"[green3]{formatted_mikro}/0.1L[/green3]"
         elif 10000.0 < value <= 50000.0:
-            formatted_mikro = f"[yellow]{formatted_mikro}/0.1L[/yellow]"
+            formatted_mikro = f"[yellow3]{formatted_mikro}/0.1L[/yellow3]"
         elif 50000.0 < value <= 100000.0:
             formatted_mikro = f"[orange_red1]{formatted_mikro}/0.1L[/orange_red1]"
         else:
@@ -108,9 +108,9 @@ class SensorsDataFormat:
         if value <= 2000.0:
             formatted_small = f"[dodger_blue1]{formatted_small}/0.1L[/dodger_blue1]"
         elif 2000.0 < value <= 5000.0:
-            formatted_small = f"[green]{formatted_small}/0.1L[/green]"
+            formatted_small = f"[green3]{formatted_small}/0.1L[/green3]"
         elif 5000.0 < value <= 10000.0:
-            formatted_small = f"[yellow]{formatted_small}/0.1L[/yellow]"
+            formatted_small = f"[yellow3]{formatted_small}/0.1L[/yellow3]"
         elif 10000.0 < value <= 20000.0:
             formatted_small = f"[orange_red1]{formatted_small}/0.1L[/orange_red1]"
         else:
@@ -124,9 +124,9 @@ class SensorsDataFormat:
         if value <= 1000.0:
             formatted_medium = f"[dodger_blue1]{formatted_medium}/0.1L[/dodger_blue1]"
         elif 1000.0 < value <= 2000.0:
-            formatted_medium = f"[green]{formatted_medium}/0.1L[/green]"
+            formatted_medium = f"[green3]{formatted_medium}/0.1L[/green3]"
         elif 2000.0 < value <= 3000.0:
-            formatted_medium = f"[yellow]{formatted_medium}/0.1L[/yellow]"
+            formatted_medium = f"[yellow3]{formatted_medium}/0.1L[/yellow3]"
         elif 3000.0 < value <= 4000.0:
             formatted_medium = f"[orange_red1]{formatted_medium}/0.1L[/orange_red1]"
         else:
@@ -140,9 +140,9 @@ class SensorsDataFormat:
         if value <= 10.0:
             formatted_oxide = f"[dodger_blue1]{formatted_oxide}K0[/dodger_blue1]"
         elif 10.0 < value <= 25.0:
-            formatted_oxide = f"[green]{formatted_oxide}K0[/green]"
+            formatted_oxide = f"[green3]{formatted_oxide}K0[/green3]"
         elif 25.0 < value <= 40.0:
-            formatted_oxide = f"[yellow]{formatted_oxide}K0[/yellow]"
+            formatted_oxide = f"[yellow3]{formatted_oxide}K0[/yellow3]"
         elif 50.0 < value <= 100.0:
             formatted_oxide = f"[orange_red1]{formatted_oxide}K0[/orange_red1]"
         else:
@@ -156,9 +156,9 @@ class SensorsDataFormat:
         if value <= 50.0:
             formatted_reduce = f"[dodger_blue1]{formatted_reduce}K0[/dodger_blue1]"
         elif 50.0 < value <= 100.0:
-            formatted_reduce = f"[green]{formatted_reduce}K0[/green]"
+            formatted_reduce = f"[green3]{formatted_reduce}K0[/green3]"
         elif 100.0 < value <= 200.0:
-            formatted_reduce = f"[yellow]{formatted_reduce}K0[/yellow]"
+            formatted_reduce = f"[yellow3]{formatted_reduce}K0[/yellow3]"
         elif 200.0 < value <= 400.0:
             formatted_reduce = f"[orange_red1]{formatted_reduce}K0[/orange_red1]"
         else:
@@ -172,9 +172,9 @@ class SensorsDataFormat:
         if value <= 50.0:
             formatted_nh3 = f"[dodger_blue1]{formatted_nh3}K0[/dodger_blue1]"
         elif 50.0 < value <= 100.0:
-            formatted_nh3 = f"[green]{formatted_nh3}K0[/green]"
+            formatted_nh3 = f"[green3]{formatted_nh3}K0[/green3]"
         elif 100.0 < value <= 200.0:
-            formatted_nh3 = f"[yellow]{formatted_nh3}K0[/yellow]"
+            formatted_nh3 = f"[yellow3]{formatted_nh3}K0[/yellow3]"
         elif 200.0 < value <= 400.0:
             formatted_nh3 = f"[orange_red1]{formatted_nh3}K0[/orange_red1]"
         else:
@@ -186,9 +186,9 @@ class SensorsDataFormat:
         formatted_overall_quality = ""
 
         if value == " Good":
-            formatted_overall_quality = f"[green]{value}[/green]"
+            formatted_overall_quality = f"[green3]{value}[/green3]"
         elif value == " Normal":
-            formatted_overall_quality = f"[yellow]{value}[/yellow]"
+            formatted_overall_quality = f"[yellow3]{value}[/yellow3]"
         elif value == " Bad":
             formatted_overall_quality = f"[red]{value}[/red]"
 

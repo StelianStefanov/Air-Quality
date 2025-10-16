@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5; url=/clock" />
+    <link href="{{ url_for('static', path='/css/tailwindcss.css?v=')}}{{assets_version}}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/css/builder/air_page.css?v=')}}{{assets_version}}" rel="stylesheet">
+    <title>Air - Home Interface</title>
+</head>
+
+<body class="air-body">
+    <div class="air-container">
+        <div class="temperature-card">
+            <div class="temperature-icon">
+                <img src="{{ url_for('static', path='/images/thermometer-svgrepo-com.svg') }}" width="64" height="64"
+                    alt="Temperature">
+            </div>
+            <div class="air-quality-label">Temperature</div>
+            <div class="temperature-value">{{temp}}</div>
+        </div>
+
+        <div class="air-quality-card air-quality-{{overall_quality.strip().lower()}}">
+            <div class="air-quality-icon">
+                <img src="{{ url_for('static', path='/images/air-contamination-factory-svgrepo-com.svg') }}" width="64"
+                    height="64" alt="Air Quality">
+            </div>
+            <div class="air-quality-label">Air Quality</div>
+            <div class="air-quality-value">{{overall_quality.strip()}}</div>
+        </div>
+    </div>
+</body>
+
+</html>

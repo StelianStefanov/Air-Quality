@@ -78,6 +78,32 @@ def get_context():
     }
 
 
+@app.get("/clock", response_class=HTMLResponse)
+def clock(request: Request):
+    data = get_context()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="clock.html",
+        context={
+            "clock": data["sensor_data"]["clock"],
+            "date": data["sensor_data"]["date"],
+        },
+    )
+
+@app.get("/air", response_class=HTMLResponse)
+def air(request: Request):
+    data = get_context()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="air.html",
+        context={
+            **data["sensor_data"],
+            **data["sensor_properties"],
+        },
+    )
+
 @app.get("/", response_class=HTMLResponse)
 def home_page(request: Request):
     """Home page view"""

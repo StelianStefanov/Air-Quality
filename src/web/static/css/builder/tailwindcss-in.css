@@ -1,6 +1,7 @@
 @import "styles.css";
 @import "styles_dev.css";
+@import "air_page.css";
+@import "clock_page.css";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-

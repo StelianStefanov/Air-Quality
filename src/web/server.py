@@ -1,7 +1,7 @@
 """FastApi views"""
 
 import logging
-
+import json
 
 from datetime import datetime
 from fastapi import FastAPI, Request, Response
@@ -33,7 +33,14 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 def get_context():
     """View Context Test"""
-    data = redis_db.get_sensor_data("sensor_data")
+    with open("/home/pi/air_quality/temp/running_service.json", "r") as f:
+        running_service = json.load(f)
+
+    if running_service["service"] == "display":
+        data = redis_db.get_sensor_data("sensor_data_display")
+    else:
+        data = redis_db.get_sensor_data("sensor_data_background")
+    
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
     date = datetime.now().strftime("%x")
     clock = datetime.now().strftime("%H:%M")

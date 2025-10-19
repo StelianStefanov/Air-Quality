@@ -64,7 +64,7 @@ class Display(App):
         enviro_gas_data = self.enviro_gas_sensor.get_data()
         compensated_temp = Utilities.temperature_compensation(enviro_data["temperature"])
         network_ip = str(Utilities.get_ip_address())
-        overall_quality = Utilities.get_overall_quality(compensated_temp, enviro_data, pms_data, enviro_gas_data)
+        overall_quality = Utilities.get_overall_quality(enviro_data, pms_data, enviro_gas_data)
 
         self.query_one("#temp").update(self.data_formatter.do_format("temperature", compensated_temp))
         self.query_one("#press").update(self.data_formatter.do_format("pressure", enviro_data["pressure"]))
@@ -98,5 +98,5 @@ class Display(App):
 
         if network_ip:
             self.redis_db.save_sensor_data(
-                "sensor_data", {**enviro_data, **pms_data, **enviro_gas_data, "quality": overall_quality}
+                "sensor_data_display", {**enviro_data, **pms_data, **enviro_gas_data, "quality": overall_quality}
             )

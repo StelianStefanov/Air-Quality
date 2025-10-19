@@ -1,6 +1,7 @@
 """Startup module"""
 
 import logging
+import json
 
 from src.display import Display
 from src.logger import Logger
@@ -18,6 +19,8 @@ Utilities.logger = main_logger
 
 def main():
     try:
+        with open("/home/pi/air_quality/temp/running_service.json", "w") as f:
+            json.dump({"service": "display"}, f)
         Display(main_logger).run()
     except Exception as e:
         main_logger.exception(e)

@@ -39,7 +39,7 @@ class Utilities:
         That's why here we execute a simple formula that is using the raspberry
         temp and the sensor temp."""
 
-        factor = main_cnf.compensation_temp_factor
+        factor = 10
 
         def get_cpu_temperature() -> float:
             """Gets the raspberry pi CPU temperature"""

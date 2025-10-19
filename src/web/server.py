@@ -33,10 +33,10 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 def get_context():
     """View Context Test"""
-    with open("/home/pi/air_quality/temp/running_service.json", "r") as f:
-        running_service = json.load(f)
-
-    if running_service["service"] == "display":
+    # Get running service from Redis (already decoded due to decode_responses=True)
+    service = redis_db.db.get("running_service") or "background"
+    
+    if service == "display":
         data = redis_db.get_sensor_data("sensor_data_display")
     else:
         data = redis_db.get_sensor_data("sensor_data_background")

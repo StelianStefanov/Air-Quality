@@ -47,8 +47,7 @@ class BackgroundData:
                     "sensor_data_background", {**data, "quality": overall_quality}
                 )
             
-            with open("/home/pi/air_quality/temp/running_service.json", "w") as f:
-                json.dump({"service": "background"}, f)
+            self.redis_db.db.set("running_service", "background")
         except Exception as e:
             self.logger.exception(e)
         

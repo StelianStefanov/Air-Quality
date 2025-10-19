@@ -4,9 +4,9 @@ class SensorColors:
     @staticmethod
     def temperature(value: float) -> str:
 
-        if value <= 15.0:
+        if value <= 20.0:
             temp_color = "text-blue-600"
-        elif 15.0 < value <= 25.0:
+        elif 20.0 < value <= 25.0:
             temp_color = "text-green-600"
         elif 25.0 < value <= 30.0:
             temp_color = "text-yellow-400"

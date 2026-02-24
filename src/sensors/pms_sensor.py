@@ -8,7 +8,8 @@ class PmsSensor:
         self.pms = None
 
         try:
-            self.pms = PMS5003(device="/dev/ttyAMA0", baudrate=9600)
+            #self.pms = PMS5003(device="/dev/ttyAMA0", baudrate=9600)
+            self.pms = PMS5003(device='/dev/serial0', baudrate=9600)
         except Exception as e:
             self.main_logger.exception(e)
 

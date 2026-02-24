@@ -1,5 +1,6 @@
 import json
-import time 
+import time
+import logging
 
 from src.sensors.enviro_gas import EnviroGas
 from src.sensors.enviro_sensor import EnviroSensor
@@ -7,7 +8,14 @@ from src.sensors.pms_sensor import PmsSensor
 from src.logger import Logger
 from src.redis_database import RedisDatabase
 from src.utilities import Utilities
+from src.main_config import main_cnf
+main_logger = Logger(
+    logger_name="Air",
+    level=logging.INFO,
+    filename=str(main_cnf.cli_log_path),
+)
 
+Utilities.logger = main_logger
 
 
 class BackgroundData:
@@ -53,10 +61,13 @@ class BackgroundData:
         
 
 def main():
-    background_data = BackgroundData(Logger)
-    while True:
-        background_data._get_all_sensors_data()
-        time.sleep(1.5)
+    try:
+        background_data = BackgroundData(main_logger)
+        while True:
+            background_data._get_all_sensors_data()
+            time.sleep(1.5)
+    except Exception as e:
+        main_logger.exception(e)
 
 if __name__ == "__main__":
     main()

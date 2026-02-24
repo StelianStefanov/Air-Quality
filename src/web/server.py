@@ -42,7 +42,7 @@ def get_context():
         data = redis_db.get_sensor_data("sensor_data_background")
     
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
-    date = datetime.now().strftime("%x")
+    date = datetime.now().strftime("%d/%m/%Y")
     clock = datetime.now().strftime("%H:%M")
     assets_version = main_cnf.assets_version
 

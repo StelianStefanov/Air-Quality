@@ -17,6 +17,7 @@ from src.utilities import Utilities
 from src.web.sensor_colors import SensorColors
 from src.logger import Logger
 from src.redis_database import RedisDatabase
+from src.api.outside_weather import CurrentWeather
 
 logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.web_log_path))
 app = FastAPI()
@@ -101,6 +102,7 @@ def clock(request: Request):
 @app.get("/air", response_class=HTMLResponse)
 def air(request: Request):
     data = get_context()
+    outside_temp = CurrentWeather()
 
     return templates.TemplateResponse(
         request=request,
@@ -108,6 +110,7 @@ def air(request: Request):
         context={
             **data["sensor_data"],
             **data["sensor_properties"],
+            "outside_temp": outside_temp.return_weather_data()
         },
     )
 

@@ -5,12 +5,14 @@
 }
 
 .air-container {
-    @apply flex flex-row gap-8 p-8 w-full h-full items-center justify-center;
+    @apply grid gap-5 p-5 w-full h-full items-stretch justify-stretch;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
 }
 
 /* Temperature Card */
 .temperature-card {
-    @apply bg-gray-800 rounded-2xl p-12 text-center shadow-lg border border-gray-700 flex-1 h-96 flex flex-col items-center justify-center;
+    @apply bg-gray-800 rounded-2xl p-6 text-center shadow-lg border border-gray-700 h-full flex flex-col items-center justify-center col-start-1;
 }
 
 .temperature-icon {
@@ -23,7 +25,7 @@
 
 /* Air Quality Card */
 .air-quality-card {
-    @apply rounded-2xl p-12 text-center shadow-lg border-2 transition-all duration-300 flex-1 h-96 flex flex-col items-center justify-center;
+    @apply rounded-2xl p-5 text-center shadow-lg border-2 transition-all duration-300 col-start-2 row-start-1 row-span-2 h-full flex flex-col items-center justify-center;
 }
 
 .air-quality-icon {
@@ -66,12 +68,16 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .air-container {
-        @apply flex-col gap-4 p-4;
+        @apply flex flex-col gap-4 p-4;
     }
 
     .temperature-card,
     .air-quality-card {
         @apply h-64 p-8;
+    }
+
+    .air-quality-card {
+        @apply row-span-1;
     }
 
     .temperature-icon,

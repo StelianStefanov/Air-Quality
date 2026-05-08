@@ -43,7 +43,7 @@ class PmsSensor:
                 pms_data["small"] = sensor_data.pm_per_1l_air(0.5)
                 pms_data["medium"] = sensor_data.pm_per_1l_air(1.0)
         except (ChecksumMismatchError, ReadTimeoutError) as e:
-            self.main_logger.exception(e)
+            #self.main_logger.exception(e)
             try:
                 self.pms.reset()  # flushes buffer and re-syncs frame alignment
             except Exception:

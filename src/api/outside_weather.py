@@ -10,7 +10,7 @@ class CurrentWeather():
     def __init__(self):
         load_dotenv()
         self.CURRENT_WEATHER_API = os.getenv("CURRENT_WEATHER_API")
-        self.CACHE_FILE = "weather_cache.json"
+        self.CACHE_FILE = "src/api/weather_cache.json"
         self.CACHE_TIME_LIMIT = 1800
 
     

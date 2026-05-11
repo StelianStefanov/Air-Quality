@@ -4,3 +4,4 @@ textual.log
 .env
 logs/cli.log
 logs/web.log
+src/api/weather_cache.json

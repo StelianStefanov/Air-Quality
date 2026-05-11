@@ -13,7 +13,7 @@ class SensorColors:
         else:
             temp_color = "text-red-600"
         return temp_color
-
+    
     @staticmethod
     def pressure(value: float) -> str:
 

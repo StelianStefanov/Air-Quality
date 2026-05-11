@@ -19,7 +19,7 @@ class CurrentWeather():
         response.raise_for_status()
         
         data = response.json()
-        return round(data["main"]["temp"], 1)
+        return data["main"]["temp"]
 
     
     def return_weather_data(self):

@@ -43,6 +43,7 @@ def get_context():
         data = redis_db.get_sensor_data("sensor_data_background")
     
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
+    outside_temp = CurrentWeather()
     date = datetime.now().strftime("%d/%m/%Y")
     clock = datetime.now().strftime("%H:%M")
     assets_version = main_cnf.assets_version
@@ -50,6 +51,7 @@ def get_context():
     return {
         "sensor_data": {
             "temp": f"{round(compensated_temp, 1)}°C",
+            "outside_temp": f"{round(outside_temp.return_weather_data(), 1)}°C",
             "pressure": f"{round(data['pressure'], 1)}HPa",
             "humidity": f"{round(data['humidity'], 1)}%",
             "smoke": f"{data['smoke']}µg/m³",
@@ -68,6 +70,7 @@ def get_context():
             "page_title": f"Air Quality",
             "overall_quality": data["quality"],
             "temp_color": SensorColors.temperature(compensated_temp),
+            "outside_temp_color": SensorColors.temperature(outside_temp.return_weather_data()),
             "pressure_color": SensorColors.pressure(data["pressure"]),
             "humidity_color": SensorColors.humidity(data["humidity"]),
             "smoke_color": SensorColors.smoke(data["smoke"]),
@@ -102,15 +105,13 @@ def clock(request: Request):
 @app.get("/air", response_class=HTMLResponse)
 def air(request: Request):
     data = get_context()
-    outside_temp = CurrentWeather()
-
+    
     return templates.TemplateResponse(
         request=request,
         name="air.html",
         context={
             **data["sensor_data"],
             **data["sensor_properties"],
-            "outside_temp": outside_temp.return_weather_data()
         },
     )
 

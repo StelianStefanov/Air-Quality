@@ -17,9 +17,15 @@ class CurrentWeather():
     def _get_current_weather_data(self):
         response = requests.get(self.CURRENT_WEATHER_API)
         response.raise_for_status()
-        
+
         data = response.json()
-        return data["main"]["temp"]
+        weather_items = data.get("weather") or []
+        weather_main = weather_items[0].get("main") if weather_items else None
+
+        return {
+            "temp": data["main"]["temp"],
+            "weather": weather_main,
+        }
 
     
     def return_weather_data(self):

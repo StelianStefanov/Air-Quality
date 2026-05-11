@@ -23,8 +23,22 @@
 
         <div class="temperature-card">
             <div class="temperature-icon">
+                {% if outside_weather == "Clear" %}
+                <span aria-label="Clear" role="img">☀️</span>
+                {% elif outside_weather == "Clouds" %}
+                <span aria-label="Clouds" role="img">☁️</span>
+                {% elif outside_weather == "Rain" %}
+                <span aria-label="Rain" role="img">🌧️</span>
+                {% elif outside_weather == "Drizzle" %}
+                <span aria-label="Drizzle" role="img">🌦️</span>
+                {% elif outside_weather == "Thunderstorm" %}
+                <span aria-label="Thunderstorm" role="img">⛈️</span>
+                {% elif outside_weather == "Snow" %}
+                <span aria-label="Snow" role="img">❄️</span>
+                {% else %}
                 <img src="{{ url_for('static', path='/images/thermometer-svgrepo-com.svg') }}" width="64" height="64"
                     alt="Temperature">
+                {% endif %}
             </div>
             <div class="air-quality-label">Outside Temperature</div>
             <div class="{{outside_temp_color}} temperature-value">{{outside_temp}}</div>

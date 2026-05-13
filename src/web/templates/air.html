@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5; url=/clock" />
+    <link href="{{ url_for('static', path='/css/tailwindcss.css?v=')}}{{assets_version}}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/css/builder/air_page.css?v=')}}{{assets_version}}" rel="stylesheet">
+    <title>Air - Home Interface</title>
+</head>
+
+<body class="air-body">
+    <div class="air-container">
+        <div class="temperature-card">
+            <div class="temperature-icon">
+                <img src="{{ url_for('static', path='/images/thermometer-svgrepo-com.svg') }}" width="64" height="64"
+                    alt="Temperature">
+            </div>
+            <div class="air-quality-label">Temperature</div>
+            <div class="{{temp_color}} temperature-value">{{temp}}</div>
+        </div>
+
+        <div class="temperature-card">
+            <div class="temperature-icon">
+                {% if outside_weather == "Clear" %}
+                {% if clock >= "19:00" or clock < "06:00" %} <span aria-label="Clear night" role="img">🌙</span>
+                    {% else %}
+                    <span aria-label="Clear" role="img">☀️</span>
+                    {% endif %}
+                    {% elif outside_weather == "Clouds" %}
+                    <span aria-label="Clouds" role="img">☁️</span>
+                    {% elif outside_weather == "Rain" %}
+                    <span aria-label="Rain" role="img">🌧️</span>
+                    {% elif outside_weather == "Drizzle" %}
+                    {% if clock >= "19:00" or clock < "06:00" %} <span aria-label="Drizzle night" role="img">
+                        🌧️🌙</span>
+                        {% else %}
+                        <span aria-label="Drizzle" role="img">🌦️</span>
+                        {% endif %}
+                        {% elif outside_weather == "Thunderstorm" %}
+                        <span aria-label="Thunderstorm" role="img">⛈️</span>
+                        {% elif outside_weather == "Snow" %}
+                        <span aria-label="Snow" role="img">❄️</span>
+                        {% else %}
+                        <img src="{{ url_for('static', path='/images/thermometer-svgrepo-com.svg') }}" width="64"
+                            height="64" alt="Temperature">
+                        {% endif %}
+            </div>
+            <div class="air-quality-label">Outside Temperature</div>
+            <div class="{{outside_temp_color}} temperature-value">{{outside_temp}}</div>
+        </div>
+
+        <div class="air-quality-card air-quality-{{overall_quality.strip().lower()}}">
+            <div class="air-quality-icon">
+                <img src="{{ url_for('static', path='/images/air-contamination-factory-svgrepo-com.svg') }}" width="64"
+                    height="64" alt="Air Quality">
+            </div>
+            <div class="air-quality-label">Air Quality</div>
+            <div class="air-quality-value">{{overall_quality.strip()}}</div>
+        </div>
+    </div>
+</body>
+
+</html>

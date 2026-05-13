@@ -1,4 +1,4 @@
-from pms5003 import PMS5003
+from pms5003 import PMS5003, ChecksumMismatchError, ReadTimeoutError
 from src.logger import Logger
 
 
@@ -8,7 +8,8 @@ class PmsSensor:
         self.pms = None
 
         try:
-            self.pms = PMS5003(device="/dev/ttyAMA0", baudrate=9600)
+            #self.pms = PMS5003(device="/dev/ttyAMA0", baudrate=9600)
+            self.pms = PMS5003(device='/dev/serial0', baudrate=9600)
         except Exception as e:
             self.main_logger.exception(e)
 
@@ -41,6 +42,12 @@ class PmsSensor:
                 pms_data["mikro"] = sensor_data.pm_per_1l_air(0.3)
                 pms_data["small"] = sensor_data.pm_per_1l_air(0.5)
                 pms_data["medium"] = sensor_data.pm_per_1l_air(1.0)
+        except (ChecksumMismatchError, ReadTimeoutError) as e:
+            #self.main_logger.exception(e)
+            try:
+                self.pms.reset()  # flushes buffer and re-syncs frame alignment
+            except Exception:
+                pass
         except Exception as e:
             self.main_logger.exception(e)
 

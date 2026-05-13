@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5; url=/air" />
+    <link href="{{ url_for('static', path='/css/tailwindcss.css?v=')}}{{assets_version}}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/css/builder/clock_page.css?v=')}}{{assets_version}}" rel="stylesheet">
+    <title>Clock - Home Interface</title>
+</head>
+
+<body class="clock-body">
+    <div class="clock-container">
+        <div class="main_clock">{{clock}}</div>
+        <div class="main_date">{{date}}</div>
+    </div>
+</body>
+
+</html>

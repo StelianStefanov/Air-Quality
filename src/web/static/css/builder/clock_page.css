@@ -1,0 +1,23 @@
+/* Clock Page Styles */
+.clock-body {
+    @apply bg-gray-900 h-screen w-full overflow-hidden;
+}
+
+.clock-container {
+    @apply h-screen w-full flex flex-col items-center justify-center relative;
+}
+
+
+.main_clock {
+    @apply font-mono font-bold text-center;
+    @apply text-white tracking-wider;
+    @apply text-[270px];
+    line-height: 0.8;
+}
+
+.main_date {
+    @apply font-sans font-light text-center mt-8;
+    @apply text-white/90 tracking-wide;
+    @apply text-6xl;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}

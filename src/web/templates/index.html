@@ -1,87 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{page_title}}</title>
-    <link href="{{ url_for('static', path='/css/tailwindcss.css?v=')}}{{assets_version}}" rel="stylesheet">
-    <link rel="icon" href="{{ url_for('static', path='/images/favicon.png') }}" type="image/png">
-    <meta http-equiv="refresh" content="{{reload_interval}}">
-  </head>
-  <body class="bg-slate-900">
-    <main>
-      
-      <div class="header">
-        <div>{{date}}</div>
 
-        <div class="font-bold">{{page_title}}:<span class="{{overall_title_color}}">{{overall_quality}}</span></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{page_title}}</title>
+  <link href="{{ url_for('static', path='/css/tailwindcss.css?v=')}}{{assets_version}}" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', path='/images/favicon.png') }}" type="image/png">
+  <meta http-equiv="refresh" content="{{reload_interval}}">
+</head>
 
-        <div>{{clock}}</div>
+<body class="bg-slate-900">
+  <main>
+
+    <div class="header">
+      <div>{{date}}</div>
+
+      <div class="font-bold">{{page_title}}:<span class="{{overall_title_color}}">{{overall_quality}}</span></div>
+
+      <div>{{clock}}</div>
+    </div>
+
+    <div class="sensors-container">
+
+      <div class="sensor-content">
+        <div class="sensor-title">Temperature</div>
+        <div class="{{temp_color}} sensor-value">🌡️{{temp}}</div>
       </div>
-      
-      <div class="sensors-container">
 
-         <div class="sensor-content">
-            <div class="sensor-title">Temperature</div>
-            <div class="{{temp_color}} sensor-value">🌡️{{temp}}</div>
-          </div>
+      <div class="sensor-content">
+        <div class="sensor-title">Pressure</div>
+        <div class="{{pressure_color}} sensor-value">💨 {{pressure}}</div>
+      </div>
 
-          <div class="sensor-content">
-            <div class="sensor-title">Pressure</div>
-            <div class="{{pressure_color}} sensor-value">💨 {{pressure}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">Humidity</div>
-            <div class="{{humidity_color}} sensor-value">💧{{humidity}}</div>
-          </div>
-  
-          <div class="sensor-content">
-            <div class="sensor-title">PM 1.0</div>
-            <div class="{{smoke_color}} sensor-value" id="smoke"><img width="32" height="32" src="{{ url_for('static', path='/images/smoke.png') }}">{{smoke}}</div>
-          </div>
-  
-          <div class="sensor-content">
-            <div class="sensor-title">PM 2.5</div>
-            <div class="{{metals_color}} sensor-value" id="metals"><img width="32" height="32" src="{{ url_for('static', path='/images/metals.png') }}">{{metals}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">PM 10</div>
-            <div class="{{dust_color}} sensor-value" id="dust"><img width="28" height="28" src="{{ url_for('static', path='/images/dust.png') }}">{{dust}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">Oxide</div>
-            <div class="{{oxide_color}} sensor-value">🫧 {{oxide}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">Reduce</div>
-            <div class="{{reduce_color}} sensor-value" id="reduce"><img width="38" height="28" src="{{ url_for('static', path='/images/reduce.png') }}">{{reduce}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">NH3</div>
-            <div class="{{nh3_color}} sensor-value">🧬 {{nh3}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">PM 0.3</div>
-            <div class="{{mikro_color}} sensor-value">{{mikro}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">PM 0.5</div>
-            <div class="{{small_color}} sensor-value">{{small}}</div>
-          </div>
-          
-          <div class="sensor-content">
-            <div class="sensor-title">PM 1.0</div>
-            <div class="{{medium_color}} sensor-value">{{medium}}</div>
-          </div>
-       </div>
-    </main>
-  </body>
+      <div class="sensor-content">
+        <div class="sensor-title">Humidity</div>
+        <div class="{{humidity_color}} sensor-value">💧{{humidity}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">PM 1.0</div>
+        <div class="{{smoke_color}} sensor-value" id="smoke"><img width="32" height="32"
+            src="{{ url_for('static', path='/images/smoke.png') }}">{{smoke}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">PM 2.5</div>
+        <div class="{{metals_color}} sensor-value" id="metals"><img width="32" height="32"
+            src="{{ url_for('static', path='/images/metals.png') }}">{{metals}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">PM 10</div>
+        <div class="{{dust_color}} sensor-value" id="dust"><img width="28" height="28"
+            src="{{ url_for('static', path='/images/dust.png') }}">{{dust}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">Oxide</div>
+        <div class="{{oxide_color}} sensor-value">🫧 {{oxide}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">Reduce</div>
+        <div class="{{reduce_color}} sensor-value" id="reduce"><img width="38" height="28"
+            src="{{ url_for('static', path='/images/reduce.png') }}">{{reduce}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">NH3</div>
+        <div class="{{nh3_color}} sensor-value">🧬 {{nh3}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">PM 0.3</div>
+        <div class="{{mikro_color}} sensor-value">{{mikro}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">PM 0.5</div>
+        <div class="{{small_color}} sensor-value">{{small}}</div>
+      </div>
+
+      <div class="sensor-content">
+        <div class="sensor-title">PM 1.0</div>
+        <div class="{{medium_color}} sensor-value">{{medium}}</div>
+      </div>
+    </div>
+  </main>
+</body>
+
 </html>

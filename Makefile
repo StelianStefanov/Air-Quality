@@ -12,4 +12,4 @@ tailwindx64: # Tailwindcss rebuild (watch) tops="--minify"
 	@./bin/tailwindcssx64 -i src/web/static/css/builder/tailwindcss-in.css -o src/web/static/css/tailwindcss.css --watch $(tops)
 
 web-start: # starts web server
-	@fastapi run www.py --host 0.0.0.0 --port 8000
+	@./.venv/bin/python -m fastapi run www.py --host 0.0.0.0 --port 8000 --reload

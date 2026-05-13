@@ -1,7 +1,7 @@
 """FastApi views"""
 
 import logging
-
+import json
 
 from datetime import datetime
 from fastapi import FastAPI, Request, Response
@@ -17,6 +17,7 @@ from src.utilities import Utilities
 from src.web.sensor_colors import SensorColors
 from src.logger import Logger
 from src.redis_database import RedisDatabase
+from src.api.outside_weather import CurrentWeather
 
 logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.web_log_path))
 app = FastAPI()
@@ -33,15 +34,25 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 def get_context():
     """View Context Test"""
-    data = redis_db.get_sensor_data("sensor_data")
+    # Get running service from Redis (already decoded due to decode_responses=True)
+    service = redis_db.db.get("running_service") or "background"
+    
+    if service == "display":
+        data = redis_db.get_sensor_data("sensor_data_display")
+    else:
+        data = redis_db.get_sensor_data("sensor_data_background")
+    
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
-    date = datetime.now().strftime("%x")
+    outside_weather = CurrentWeather(logger).return_weather_data()
+    date = datetime.now().strftime("%d/%m/%Y")
     clock = datetime.now().strftime("%H:%M")
     assets_version = main_cnf.assets_version
 
     return {
         "sensor_data": {
             "temp": f"{round(compensated_temp, 1)}°C",
+            "outside_temp": f"{round(outside_weather['temp'], 1)}°C",
+            "outside_weather": outside_weather["weather"],
             "pressure": f"{round(data['pressure'], 1)}HPa",
             "humidity": f"{round(data['humidity'], 1)}%",
             "smoke": f"{data['smoke']}µg/m³",
@@ -60,6 +71,7 @@ def get_context():
             "page_title": f"Air Quality",
             "overall_quality": data["quality"],
             "temp_color": SensorColors.temperature(compensated_temp),
+            "outside_temp_color": SensorColors.temperature(outside_weather["temp"]),
             "pressure_color": SensorColors.pressure(data["pressure"]),
             "humidity_color": SensorColors.humidity(data["humidity"]),
             "smoke_color": SensorColors.smoke(data["smoke"]),
@@ -77,6 +89,32 @@ def get_context():
         },
     }
 
+
+@app.get("/clock", response_class=HTMLResponse)
+def clock(request: Request):
+    data = get_context()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="clock.html",
+        context={
+            "clock": data["sensor_data"]["clock"],
+            "date": data["sensor_data"]["date"],
+        },
+    )
+
+@app.get("/air", response_class=HTMLResponse)
+def air(request: Request):
+    data = get_context()
+    
+    return templates.TemplateResponse(
+        request=request,
+        name="air.html",
+        context={
+            **data["sensor_data"],
+            **data["sensor_properties"],
+        },
+    )
 
 @app.get("/", response_class=HTMLResponse)
 def home_page(request: Request):

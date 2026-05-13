@@ -39,7 +39,7 @@ class Utilities:
         That's why here we execute a simple formula that is using the raspberry
         temp and the sensor temp."""
 
-        factor = main_cnf.compensation_temp_factor
+        factor = 2
 
         def get_cpu_temperature() -> float:
             """Gets the raspberry pi CPU temperature"""
@@ -76,7 +76,7 @@ class Utilities:
                 time.sleep(0.5)
 
     @staticmethod
-    def get_overall_quality(temperature: float, enviro_data: dict, pms_data: dict, enviro_gas_data: dict) -> str:
+    def get_overall_quality(enviro_data: dict, pms_data: dict, enviro_gas_data: dict) -> str:
         """Get overall air quality with proper error handling"""
 
         GREEN_RANGE_THRESHOLD = 1028  # 12342 - number without deviding by 12
@@ -85,7 +85,6 @@ class Utilities:
         total_quality = ""
         try:
             total_quality = (
-                temperature
                 + enviro_data["pressure"]
                 + enviro_data["humidity"]
                 + pms_data["smoke"]

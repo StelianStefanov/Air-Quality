@@ -2,16 +2,58 @@ from pms5003 import PMS5003, ChecksumMismatchError, ReadTimeoutError
 from src.logger import Logger
 
 
+class _ManagedPMS5003(PMS5003):
+    """Cleanup adapter for the pinned pms5003==1.0.1 driver.
+
+    That version has no close API. Its constructor owns a serial connection
+    and two (gpiod.LineRequest, offset) tuples. Keep this compatibility code
+    isolated and review it when upgrading the driver.
+    """
+
+    def __init__(self, logger, **kwargs):
+        self._cleanup_logger = logger
+        self._serial = None
+        self._pin_enable = None
+        self._pin_reset = None
+        try:
+            super().__init__(**kwargs)
+        except BaseException:
+            self.close()
+            raise
+
+    def close(self) -> None:
+        for attribute, method in (
+            ("_serial", "close"),
+            ("_pin_reset", "release"),
+            ("_pin_enable", "release"),
+        ):
+            resource = getattr(self, attribute)
+            if resource is None:
+                continue
+            if method == "release":
+                resource = resource[0]
+            try:
+                getattr(resource, method)()
+            except Exception as error:
+                self._cleanup_logger.exception(error)
+            else:
+                setattr(self, attribute, None)
+
+
 class PmsSensor:
     def __init__(self, main_logger: Logger):
         self.main_logger = main_logger
         self.pms = None
 
         try:
-            #self.pms = PMS5003(device="/dev/ttyAMA0", baudrate=9600)
-            self.pms = PMS5003(device='/dev/serial0', baudrate=9600)
+            self.pms = _ManagedPMS5003(self.main_logger, device="/dev/serial0", baudrate=9600)
         except Exception as e:
             self.main_logger.exception(e)
+
+    def close(self) -> None:
+        if self.pms is not None:
+            self.pms.close()
+            self.pms = None
 
     def _get_pms(self) -> dict[str, int]:
         """

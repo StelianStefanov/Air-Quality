@@ -19,7 +19,8 @@ from src.logger import Logger
 from src.redis_database import RedisDatabase
 from src.api.outside_weather import CurrentWeather
 
-logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.web_log_path))
+logger = Logger(logger_name="Air.web", level=logging.INFO, filename=str(main_cnf.web_log_path))
+Utilities.logger = logger
 app = FastAPI()
 
 STATIC_DIR = main_cnf.root_dir / "src/web/static"

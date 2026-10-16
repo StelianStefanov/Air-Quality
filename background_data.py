@@ -10,9 +10,9 @@ from src.redis_database import RedisDatabase
 from src.utilities import Utilities
 from src.main_config import main_cnf
 main_logger = Logger(
-    logger_name="Air",
+    logger_name="Air.background",
     level=logging.INFO,
-    filename=str(main_cnf.cli_log_path),
+    filename=str(main_cnf.background_log_path),
 )
 
 Utilities.logger = main_logger
@@ -71,4 +71,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    

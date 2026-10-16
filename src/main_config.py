@@ -46,6 +46,10 @@ class MainConfig:
         return self.root_dir / "logs" / "cli.log"
 
     @property
+    def background_log_path(self) -> Path:
+        return self.root_dir / "logs" / "background.log"
+
+    @property
     def web_log_path(self) -> Path:
         return self.root_dir / "logs" / "web.log"
 

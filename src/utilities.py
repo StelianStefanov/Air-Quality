@@ -4,12 +4,11 @@ import json
 import logging
 import time
 
-from src.main_config import main_cnf
-from src.logger import Logger
-
 
 class Utilities:
-    logger = Logger(logger_name="Air", level=logging.INFO, filename=str(main_cnf.cli_log_path))
+    # Each service supplies its configured logger at startup. Importing utilities
+    # must not open a log file or configure application logging.
+    logger = logging.getLogger("Air.utilities")
 
     @staticmethod
     def get_ip_address() -> str:

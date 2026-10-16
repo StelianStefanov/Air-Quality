@@ -9,7 +9,7 @@ from src.utilities import Utilities
 from src.redis_database import RedisDatabase
 
 main_logger = Logger(
-    logger_name="Air",
+    logger_name="Air.display",
     level=logging.INFO,
     filename=str(main_cnf.cli_log_path),
 )

@@ -2,6 +2,6 @@
 __pycache__
 textual.log
 .env
-logs/cli.log
-logs/web.log
+logs/*.log
+logs/*.log.*
 src/api/weather_cache.json

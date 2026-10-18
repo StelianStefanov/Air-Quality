@@ -4,7 +4,7 @@ import logging
 import json
 
 from datetime import datetime
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -16,7 +16,7 @@ from src.main_config import main_cnf
 from src.utilities import Utilities
 from src.web.sensor_colors import SensorColors
 from src.logger import Logger
-from src.redis_database import RedisDatabase
+from src.redis_database import RedisDatabase, SensorDataUnavailable
 from src.api.outside_weather import CurrentWeather
 
 logger = Logger(logger_name="Air.web", level=logging.INFO, filename=str(main_cnf.web_log_path))
@@ -35,13 +35,16 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 def get_context():
     """View Context Test"""
-    # Get running service from Redis (already decoded due to decode_responses=True)
-    service = redis_db.db.get("running_service") or "background"
-    
-    if service == "display":
-        data = redis_db.get_sensor_data("sensor_data_display")
-    else:
-        data = redis_db.get_sensor_data("sensor_data_background")
+    try:
+        service = redis_db.get_running_service()
+        data_key = "sensor_data_display" if service == "display" else "sensor_data_background"
+        data = redis_db.get_sensor_data(data_key)
+    except SensorDataUnavailable as error:
+        raise HTTPException(
+            status_code=503,
+            detail="Sensor data is temporarily unavailable",
+            headers={"Retry-After": "2"},
+        ) from error
     
     compensated_temp = Utilities.temperature_compensation(data["temperature"])
     outside_weather = CurrentWeather(logger).return_weather_data()
@@ -93,14 +96,15 @@ def get_context():
 
 @app.get("/clock", response_class=HTMLResponse)
 def clock(request: Request):
-    data = get_context()
+    now = datetime.now()
 
     return templates.TemplateResponse(
         request=request,
         name="clock.html",
         context={
-            "clock": data["sensor_data"]["clock"],
-            "date": data["sensor_data"]["date"],
+            "clock": now.strftime("%H:%M"),
+            "date": now.strftime("%d/%m/%Y"),
+            "assets_version": main_cnf.assets_version,
         },
     )
 

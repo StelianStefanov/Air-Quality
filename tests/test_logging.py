@@ -8,7 +8,7 @@ import logging
 from pathlib import Path
 import sys
 from tempfile import TemporaryDirectory
-from types import ModuleType
+from types import ModuleType, SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -159,10 +159,12 @@ class LoggingTests(unittest.TestCase):
         netifaces.interfaces = lambda: []
         netifaces.ifaddresses = lambda _: {}
         netifaces.AF_INET = 2
+        config = ModuleType("src.main_config")
+        config.main_cnf = SimpleNamespace(cpu_temperature_timeout=1.0)
         path = Path(__file__).resolve().parents[1] / "src" / "utilities.py"
         spec = importlib.util.spec_from_file_location("logging_test_utilities", path)
         module = importlib.util.module_from_spec(spec)
-        with patch.dict(sys.modules, {"netifaces": netifaces}):
+        with patch.dict(sys.modules, {"netifaces": netifaces, "src.main_config": config}):
             spec.loader.exec_module(module)
         return module
 
@@ -175,7 +177,7 @@ class LoggingTests(unittest.TestCase):
     def test_utility_errors_use_injected_service_logger(self):
         module = self.load_utilities()
         module.Utilities.logger = self.make_logger("web")
-        with patch.object(module, "Popen", side_effect=FileNotFoundError("vcgencmd unavailable")):
+        with patch.object(module, "run", side_effect=FileNotFoundError("vcgencmd unavailable")):
             self.assertEqual(module.Utilities.temperature_compensation(25), 25)
         content = (self.directory / "web.log").read_text()
         self.assertEqual(content.count("Traceback (most recent call last)"), 1)

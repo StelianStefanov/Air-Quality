@@ -5,3 +5,4 @@ textual.log
 logs/*.log
 logs/*.log.*
 src/api/weather_cache.json
+memory_usage/

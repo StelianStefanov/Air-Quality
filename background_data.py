@@ -9,6 +9,7 @@ from src.logger import Logger
 from src.redis_database import RedisDatabase
 from src.utilities import Utilities
 from src.main_config import main_cnf
+from src.lifecycle import close_resources, handle_sigterm
 main_logger = Logger(
     logger_name="Air.background",
     level=logging.INFO,
@@ -21,13 +22,33 @@ Utilities.logger = main_logger
 class BackgroundData:
     def __init__(self, logger: Logger):
         self.logger = logger
-        
-        self.enviro_sensor = EnviroSensor(self.logger)
-        self.pms_sensor = PmsSensor(self.logger)
-        self.enviro_gas_sensor = EnviroGas(self.logger)
-        self.redis_db = RedisDatabase(self.logger)
+        self.enviro_sensor = self.pms_sensor = self.enviro_gas_sensor = None
+        self.redis_db = None
+        self._closed = False
+        try:
+            self.enviro_sensor = EnviroSensor(self.logger)
+            self.pms_sensor = PmsSensor(self.logger)
+            self.enviro_gas_sensor = EnviroGas(self.logger)
+            self.redis_db = RedisDatabase(self.logger)
+        except BaseException:
+            self.close()
+            raise
+
+    def close(self) -> None:
+        if self._closed:
+            return
+        self._closed = True
+        # EnviroGas cleanup belongs to the process-global driver, not this owner.
+        close_resources(
+            self.logger,
+            self.pms_sensor,
+            self.enviro_sensor,
+            self.redis_db.db if self.redis_db is not None else None,
+        )
 
     def _get_all_sensors_data(self) -> dict:
+        if self._closed:
+            return
         try:
             enviro_data = self.enviro_sensor.get_data()
             pms_data = self.pms_sensor.get_data()
@@ -61,13 +82,19 @@ class BackgroundData:
         
 
 def main():
-    try:
-        background_data = BackgroundData(main_logger)
-        while True:
-            background_data._get_all_sensors_data()
-            time.sleep(1.5)
-    except Exception as e:
-        main_logger.exception(e)
+    with handle_sigterm():
+        background_data = None
+        try:
+            background_data = BackgroundData(main_logger)
+            while True:
+                background_data._get_all_sensors_data()
+                time.sleep(1.5)
+        except KeyboardInterrupt:
+            pass
+        except Exception as e:
+            main_logger.exception(e)
+        finally:
+            close_resources(main_logger, background_data)
 
 if __name__ == "__main__":
     main()

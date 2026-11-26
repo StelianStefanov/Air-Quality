@@ -57,6 +57,7 @@ def get_context():
             "temp": f"{round(compensated_temp, 1)}°C",
             "outside_temp": f"{round(outside_weather['temp'], 1)}°C",
             "outside_weather": outside_weather["weather"],
+            "outside_weather_icon": outside_weather["weather_icon"],
             "pressure": f"{round(data['pressure'], 1)}HPa",
             "humidity": f"{round(data['humidity'], 1)}%",
             "smoke": f"{data['smoke']}µg/m³",

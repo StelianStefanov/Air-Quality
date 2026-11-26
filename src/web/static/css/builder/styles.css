@@ -1,24 +1,25 @@
-.sensors-container {
-    @apply grid grid-cols-2 xl:grid-cols-5 gap-2 px-1 py-1;
-}
+@layer components {
+    .sensors-container {
+        @apply grid grid-cols-2 xl:grid-cols-5 gap-2 px-1 py-1;
+    }
 
-.sensors-container .sensor-title {
-    @apply text-center text-white pb-0.5 text-gray-400 text-2xl;
-}
+    .sensors-container .sensor-title {
+        @apply text-center pb-0.5 text-gray-400 text-2xl;
+    }
 
-.sensors-container .sensor-content {
-    @apply w-full h-24;
-}
+    .sensors-container .sensor-content {
+        @apply w-full h-24;
+    }
 
+    .sensor-value {
+        @apply m-auto text-center text-3xl text-white gap-2;
+    }
 
-.sensor-value {
-    @apply m-auto text-center text-3xl text-white gap-2;
-}
+    #smoke, #metals, #dust, #reduce {
+        @apply flex justify-center;
+    }
 
-#smoke, #metals, #dust, #reduce {
-    @apply flex justify-center;
-}
-
-.header {
-    @apply flex flex-wrap justify-between gap-2 p-2 text-slate-200 bg-gray-800 mb-2 text-xl;
+    .header {
+        @apply flex flex-wrap justify-between gap-2 p-2 text-slate-200 bg-gray-800 mb-2 text-xl;
+    }
 }

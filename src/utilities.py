@@ -1,8 +1,12 @@
 from netifaces import interfaces, ifaddresses, AF_INET
-from subprocess import PIPE, Popen
+from subprocess import CalledProcessError, TimeoutExpired, run
 import json
 import logging
+import math
+import re
 import time
+
+from src.main_config import main_cnf
 
 
 class Utilities:
@@ -38,30 +42,28 @@ class Utilities:
         That's why here we execute a simple formula that is using the raspberry
         temp and the sensor temp."""
 
-        factor = 2
-
-        def get_cpu_temperature() -> float:
-            """Gets the raspberry pi CPU temperature"""
-            try:
-                process = Popen(["vcgencmd", "measure_temp"], stdout=PIPE, universal_newlines=True)
-                output, _error = process.communicate()
-
-                return float(output[output.index("=") + 1 : output.rindex("'")])
-            except FileNotFoundError as e:
-                Utilities.logger.exception(e)
-                return None
-
-        if get_cpu_temperature() is not None:
-            cpu_temps = [get_cpu_temperature()] * 5
-
-            cpu_temp = get_cpu_temperature()
-            # Smooth out with some averaging to decrease jitter
-            cpu_temps = cpu_temps[1:] + [cpu_temp]
-            avg_cpu_temp = sum(cpu_temps) / float(len(cpu_temps))
-
-            return raw_temperature - ((avg_cpu_temp - raw_temperature) / factor)
-        else:
+        timeout = main_cnf.cpu_temperature_timeout
+        try:
+            # run() kills and reaps the child if the timeout expires.
+            result = run(
+                ["vcgencmd", "measure_temp"],
+                capture_output=True,
+                text=True,
+                check=True,
+                timeout=timeout,
+            )
+            match = re.fullmatch(r"temp=(-?\d+(?:\.\d+)?)'C", result.stdout.strip())
+            if match is None:
+                raise ValueError("Invalid CPU temperature response")
+            cpu_temp = float(match.group(1))
+            if not math.isfinite(cpu_temp):
+                raise ValueError("Invalid CPU temperature response")
+        except (OSError, CalledProcessError, TimeoutExpired, ValueError) as error:
+            Utilities.logger.exception(error)
             return raw_temperature
+
+        factor = 2
+        return raw_temperature - ((cpu_temp - raw_temperature) / factor)
 
     @staticmethod
     def read_sensor_shared_data(logger: logging.Logger) -> dict:

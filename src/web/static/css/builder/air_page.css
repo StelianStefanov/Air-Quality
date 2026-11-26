@@ -19,6 +19,10 @@
     @apply text-6xl mb-4;
 }
 
+.outside-temperature-icon {
+    @apply text-6xl;
+}
+
 .temperature-value {
     @apply text-8xl font-bold text-blue-400;
 }

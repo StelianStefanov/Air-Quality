@@ -13,6 +13,7 @@ from src.main_config import main_cnf
 from src.sensors.sensors_data_format import SensorsDataFormat
 from src.logger import Logger
 from src.redis_database import RedisDatabase
+from src.lifecycle import close_resources
 
 
 class Display(App):
@@ -22,11 +23,39 @@ class Display(App):
     def __init__(self, logger: Logger):
         super().__init__()
         self.logger = logger
-        self.enviro_sensor = EnviroSensor(self.logger)
-        self.pms_sensor = PmsSensor(self.logger)
-        self.enviro_gas_sensor = EnviroGas(self.logger)
-        self.data_formatter = SensorsDataFormat()
-        self.redis_db = RedisDatabase(logger)
+        self.enviro_sensor = self.pms_sensor = self.enviro_gas_sensor = None
+        self.redis_db = None
+        self._update_timer = None
+        self._sensors_closed = False
+        try:
+            self.enviro_sensor = EnviroSensor(self.logger)
+            self.pms_sensor = PmsSensor(self.logger)
+            self.enviro_gas_sensor = EnviroGas(self.logger)
+            self.data_formatter = SensorsDataFormat()
+            self.redis_db = RedisDatabase(logger)
+        except BaseException:
+            self.close()
+            raise
+
+    def close(self) -> None:
+        if self._sensors_closed:
+            return
+        self._sensors_closed = True
+        if self._update_timer is not None:
+            try:
+                self._update_timer.stop()
+            except Exception as error:
+                self.logger.exception(error)
+        # EnviroGas uses shared module state and the driver's own atexit cleanup.
+        close_resources(
+            self.logger,
+            self.pms_sensor,
+            self.enviro_sensor,
+            self.redis_db.db if self.redis_db is not None else None,
+        )
+
+    def on_unmount(self) -> None:
+        self.close()
 
     def compose(self) -> ComposeResult:
         """Creates the Grid"""
@@ -54,10 +83,13 @@ class Display(App):
     def on_ready(self) -> None:
         """Calls the update function and sets the interval"""
         self.update()
-        self.set_interval(1, self.update)
+        self._update_timer = self.set_interval(1, self.update)
 
     def update(self) -> None:
         """Refreshes the data in the interval of 1 second."""
+
+        if self._sensors_closed:
+            return
 
         enviro_data = self.enviro_sensor.get_data()
         pms_data = self.pms_sensor.get_data()

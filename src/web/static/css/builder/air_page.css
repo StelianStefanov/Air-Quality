@@ -21,7 +21,7 @@
     }
 
     .outside-temperature-icon {
-        @apply text-6xl;
+        @apply w-16 h-16 object-contain scale-150 mb-2;
     }
 
     .temperature-value {

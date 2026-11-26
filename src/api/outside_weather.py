@@ -51,15 +51,15 @@ class CurrentWeather():
 
 
     def _get_sensor_icons(self, icon: str) -> str:
-        icon_path = main_cnf.root_dir / "src/web/static/images" / f"{icon}.png"
+        icon_path = main_cnf.root_dir / "src/web/static/images" / f"{icon}@4x.png"
 
         if not icon_path.exists():
-            response_icon = requests.get(f"https://openweathermap.org/img/wn/{icon}.png", timeout=5)
+            response_icon = requests.get(f"https://openweathermap.org/img/wn/{icon}@4x.png", timeout=5)
             response_icon.raise_for_status()
             icon_path.parent.mkdir(parents=True, exist_ok=True)
             icon_path.write_bytes(response_icon.content)
 
-        return f"/static/images/{icon}.png"
+        return f"/static/images/{icon}@4x.png"
 
 
     

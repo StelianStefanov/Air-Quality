@@ -5,6 +5,7 @@ import time
 
 from requests.exceptions import HTTPError, Timeout, ConnectionError, RequestException
 from src.logger import Logger
+from src.main_config import main_cnf
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -26,10 +27,12 @@ class CurrentWeather():
             data = response.json()
             weather_items = data.get("weather") or []
             weather_main = weather_items[0].get("main") if weather_items else None
+            weather_icon = self._get_sensor_icons(weather_items[0].get("icon") if weather_items else None)
 
             return {
                 "temp": data["main"]["temp"],
                 "weather": weather_main,
+                "weather_icon": weather_icon
             }
         except Timeout as time_out:
             self.main_logger.exception(time_out)
@@ -43,7 +46,21 @@ class CurrentWeather():
         return {
             "temp": 0,
             "weather": "Unkown",
+            "weather_icon": "Unkown"
         }
+
+
+    def _get_sensor_icons(self, icon: str) -> str:
+        icon_path = main_cnf.root_dir / "src/web/static/images" / f"{icon}.png"
+
+        if not icon_path.exists():
+            response_icon = requests.get(f"https://openweathermap.org/img/wn/{icon}.png", timeout=5)
+            response_icon.raise_for_status()
+            icon_path.parent.mkdir(parents=True, exist_ok=True)
+            icon_path.write_bytes(response_icon.content)
+
+        return f"/static/images/{icon}.png"
+
 
     
     def return_weather_data(self):

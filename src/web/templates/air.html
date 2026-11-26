@@ -10,7 +10,6 @@
         }, 5000);
     </script>
     <link href="{{ url_for('static', path='/css/tailwindcss.css?v=')}}{{assets_version}}" rel="stylesheet">
-    <link href="{{ url_for('static', path='/css/builder/air_page.css?v=')}}{{assets_version}}" rel="stylesheet">
     <title>Air - Home Interface</title>
 </head>
 
@@ -27,7 +26,7 @@
 
         <div class="temperature-card">
             <div class="outside-temperature-icon">
-                <img src="{{outside_weather_icon}}" width="128" height="128" alt="temperature icon">
+                <img src="{{outside_weather_icon}}" width="64" height="64" alt="temperature icon">
             </div>
             <div class="air-quality-label">Outside Temperature</div>
             <div class="{{outside_temp_color}} temperature-value">{{outside_temp}}</div>

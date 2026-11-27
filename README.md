@@ -1,42 +1,36 @@
+
 # AirQuality Sensor
 
-This project is an Air Quality Sensor designed to monitor and display air quality data using a Raspberry Pi and compatible hardware. It gathers data such as particulate matter levels and displays the readings on a Waveshare screen. Additionally, the project includes a web interface for remote access to sensor data using a FastAPI server.
+A project designed to monitor and display air quality data using a Raspberry Pi and compatible hardware. It gathers data such as particulate matter levels and displays the readings on screen. Additionally, the project includes a web interface for remote access to sensor data using a FastAPI server.
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Hardware Requirements](#hardware-requirements)
-3. [Setup Raspberry Hardware](#setup-raspberry-hardware)
-   - [Display Configuration](#display-configuration)
-   - [Update Raspberry](#update-raspberry)
-4. [Installation](#installation)
-   - [Installing Git](#installing-git)
+1. [Hardware Requirements](#hardware-requirements)
+2. [Setup](#Setup)
+   - [Setup Sensors](#setup-sensors)
+   - [Setup Raspberry](#setup-raspberry)
+3. [Installation](#installation)
    - [Cloning the Repository](#cloning-the-repository)
    - [Setting Up Virtual Environment](#setting-up-virtual-environment)
    - [Installing Dependencies](#installing-dependencies)
-5. [Running the Project](#running-the-project)
-6. [Further Instructions](#further-instructions)
-7. [API Usage](#api-usage)
+4. [Running the Project](#running-the-project)
+    - [Autostart](#autostart)
+5. [Further Instructions](#further-instructions)
+6. [API Usage](#api-usage)
 
 ## Hardware
 
 - **Raspberry PI 4** - https://www.raspberrypi.com/products/raspberry-pi-4-model-b/
-- **Waveshare 4.3inch 480x320 display** - https://www.waveshare.com/4inch-rpi-lcd-a.htm
+- **Hosyond 7 Inch Touchscreen IPS DSI Display** - https://www.amazon.com/Hosyond-Touchscreen-Compatible-Capacitive-Driver-Free/dp/B0D3QB7X4Z/ref=sr_1_3?sr=8-3
 - **GPIO Edge Extension for Raspberry Pi** - https://thepihut.com/products/gpio-edge-extension-for-raspberry-pi
 - **Enviro + Air Quality for Raspberry Pi** - https://thepihut.com/products/enviro-air-quality-for-raspberry-pi
 - **PMS5003 Particulate Matter Sensor with Cable** - https://thepihut.com/products/pms5003-particulate-matter-sensor-with-cable
 
-## Setup Raspberry hardware
+## Setup Sensors
 
-**Dipslay configuration**
+**Enviro sensors assemblation video**: **https://www.youtube.com/watch?v=M2Y9n6fhoxI**
 
-Skip if not having the same display!
-
-- Documentation: https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A)_Manual_Configuration#For_All_Raspberry_Pi_Versions
-
-**Enviro sensors assemblation video**:
-https://www.youtube.com/watch?v=M2Y9n6fhoxI
-
+## Setup Raspberry
 **Update your Raspberry**
 
 ```bash
@@ -80,69 +74,25 @@ dtoverlay=pi3-miniuart-bt
 
 First clone the git repository to your computer:
 
-If you do not have git installed:
-
-**Ubuntu/Debian**
-
-```bash
-sudo apt update
-sudo apt install git
-```
-
-**Fedora**
-
-```bash
-sudo dnf install git
-```
-
-**Arch Linux/Manjaro**
-
-```bash
-sudo pacman -S git
-```
-
-**MacOS**
-
-Install Homebrew if not already installed:
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-```
-
-Install git:
-
-```bash
-brew install git
-```
-
-**Windows**
-
-Download git from the official site:
-https://git-scm.com/download/win
-
 **Clone the repository**
-Copy the command from the green **code** button.
+
 
 ```bash
 git clone git@github.com:username/Air-Quality.git
 ```
+```bash 
+cd Air-Quality
+```
 
 **Make a virtual environment**
 
-Install virtualenv if not already installed:
+Install python virtualenv if not already installed:
 
 ```bash
 pip install virtualenv
 ```
 
 **Linux/MacOS**
-
-Go to the folder:
-
-```bash
-cd Air-Quality/
-```
 
 Create the virtualenv:
 
@@ -160,12 +110,6 @@ source .venv/bin/activate
 
 **Windows**
 
-Go to the folder:
-
-```bash
-cd Air-Quality/
-```
-
 Create the virtualenv:
 
 ```bash
@@ -180,12 +124,6 @@ Activate the virtual environment:
 venv\Scripts\activate
 ```
 
-**Generate requirements.txt**
-
-```bash
-pip freeze > requirements.txt
-```
-
 **Install dependancies**
 
 ```bash
@@ -194,9 +132,8 @@ pip install -r requirements.txt
 
 ## Run
 
-If you did everything correct so far, and you have enabled your virtualenv, everything is ready to run the main command in your project.
+If you did everything correct so far, and you have enabled your virtualenv, execute the `main.py` file.
 
-You could just run it by executing the python main file.
 
 ```bash
 python3 main.py
@@ -225,7 +162,10 @@ Name=Air
 Exec=/PATH_TO_YOUR_PROJECT/air_quality/autostart/start_air_desktop.sh
 ```
 
-**Check the .sh files in the autostart folder and raplace the project path and the .venv name with yours, otherwise it will not work!!!**
+> [!WARNING]
+> Check the `.sh` files in the `autostart` folder and replace the project path and the `.venv` name with yours. 
+>
+> Otherwise it will not work!
 
 If you want to the web page to start automatically too open the airweb.desktop file and paste the following lines:
 
